@@ -9,19 +9,19 @@ module RestAPI
     include Chef::Mixin::ShellOut
 
     def adminhref(uad, userName)
-      minhref=nil
-      uad["Items"].each do |account|
-        if account["UserName"] == userName
-          minhref=account["links"]["self"]["href"]
+      minhref = nil
+      uad['Items'].each do |account|
+        if account['UserName'] == userName
+          minhref = account['links']['self']['href']
           return minhref
         end
       end
-      fail "Could not find user account #{userName}"
+      raise "Could not find user account #{userName}"
     end
 
     def rest_api(type, path, machine, options = {})
       disable_ssl = true
-      uri = URI.parse(URI.escape("https://" + machine['ilo_site'] + path))
+      uri = URI.parse(URI.escape('https://' + machine['ilo_site'] + path))
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE if disable_ssl
@@ -37,7 +37,7 @@ module RestAPI
       when 'patch', :patch
         request = Net::HTTP::Patch.new(uri.request_uri)
       else
-        fail "Invalid rest call: #{type}"
+        raise "Invalid rest call: #{type}"
       end
       options['Content-Type'] ||= 'application/json'
       options.each do |key, val|
@@ -47,13 +47,13 @@ module RestAPI
           request[key] = val
         end
       end
-      request.basic_auth(machine["username"], machine["password"])
+      request.basic_auth(machine['username'], machine['password'])
       response = http.request(request)
       JSON.parse(response.body) rescue response
     end
 
     def apply_license(machine, license_key)
-      options = {"LicenseKey"=> license_key}
+      options = { 'LicenseKey' => license_key }
       binding.pry
       rest_api(:post, '/redfish/v1/Managers/1/LicenseService/1', machine, options )
     end

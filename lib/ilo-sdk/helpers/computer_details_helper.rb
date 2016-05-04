@@ -19,12 +19,12 @@ module ILO_SDK
       details = response_handler(response)
       {
         'GeneralDetails' => {
-        'manufacturer' => details["Manufacturer"],
-        'model' => details["Model"],
+        'manufacturer' => details['Manufacturer'],
+        'model' => details['Model'],
         'AssetTag' => details['AssetTag'],
         'bios_version' => details['Bios']['Current']['VersionString'],
         'memory' => details['Memory']['TotalSystemMemoryGB'].to_s + ' GB',
-        'processors' => details['Processors']['Count'].to_s + ' x ' + details['Processors']['ProcessorFamily'].to_s}
+        'processors' => details['Processors']['Count'].to_s + ' x ' + details['Processors']['ProcessorFamily'].to_s }
       }
     end
 
@@ -34,9 +34,9 @@ module ILO_SDK
     def get_computer_network_details
       network_adapters = []
       response = rest_get('/redfish/v1/Systems/1/NetworkAdapters/')
-      networks = response_handler(response)["links"]["Member"]
+      networks = response_handler(response)['links']['Member']
       networks.each do |network|
-        response = rest_get(network["href"])
+        response = rest_get(network['href'])
         detail = response_handler(response)
         physical_ports = []
         detail['PhysicalPorts'].each do |port|
@@ -51,7 +51,7 @@ module ILO_SDK
         nets = {
           'Name' => detail['Name'],
           'StructuredName' => detail['StructuredName'],
-          'PartNumber'  =>  detail['PartNumber'],
+          'PartNumber' => detail['PartNumber'],
           'State' => detail['Status']['State'],
           'Health' => detail['Status']['Health'],
           'PhysicalPorts' => physical_ports

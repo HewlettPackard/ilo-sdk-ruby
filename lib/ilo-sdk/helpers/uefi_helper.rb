@@ -14,7 +14,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_uefi_secure_boot(value)
-      newAction = {'SecureBootEnable' => value}
+      newAction = { 'SecureBootEnable' => value }
       response = rest_patch('/redfish/v1/Systems/1/SecureBoot/', body: newAction)
       response_handler(response)
       true

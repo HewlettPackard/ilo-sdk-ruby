@@ -9,11 +9,11 @@ module ILO_SDK
     # @option options [String] :Content-Type ('application/json') Set to nil or :none to have this option removed
     # @return [NetHTTPResponse] The response object
     def rest_api(type, path, options = {})
-      fail 'Must specify path' unless path
-      fail 'Must specify type' unless type
+      raise 'Must specify path' unless path
+      raise 'Must specify type' unless type
       @logger.debug "Making :#{type} rest call to #{@host}#{path}"
 
-      uri = URI.parse(URI.escape("https://" + @host + path))
+      uri = URI.parse(URI.escape('https://' + @host + path))
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @ssl_enabled
@@ -96,13 +96,13 @@ module ILO_SDK
       when RESPONSE_CODE_NO_CONTENT # Synchronous delete
         return {}
       when RESPONSE_CODE_BAD_REQUEST
-        fail "400 BAD REQUEST #{response.body}"
+        raise "400 BAD REQUEST #{response.body}"
       when RESPONSE_CODE_UNAUTHORIZED
-        fail "401 UNAUTHORIZED #{response.body}"
+        raise "401 UNAUTHORIZED #{response.body}"
       when RESPONSE_CODE_NOT_FOUND
-        fail "404 NOT FOUND #{response.body}"
+        raise "404 NOT FOUND #{response.body}"
       else
-        fail "#{response.code} #{response.body}"
+        raise "#{response.code} #{response.body}"
       end
     end
 
@@ -122,7 +122,7 @@ module ILO_SDK
       when 'delete', :delete
         request = Net::HTTP::Delete.new(uri.request_uri)
       else
-        fail "Invalid rest call: #{type}"
+        raise "Invalid rest call: #{type}"
       end
       options['Content-Type'] ||= 'application/json'
       options.delete('Content-Type')  if [:none, 'none', nil].include?(options['Content-Type'])

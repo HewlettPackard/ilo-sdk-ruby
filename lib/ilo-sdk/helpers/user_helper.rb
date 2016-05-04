@@ -16,7 +16,7 @@ module ILO_SDK
     # @return [String] users
     def get_users
       response = rest_get('/redfish/v1/AccountService/Accounts/')
-      items = response_handler(response)['Items'].collect{|user| user['UserName']}
+      items = response_handler(response)['Items'].collect {|user| user['UserName']}
     end
 
     # Create a user
@@ -25,7 +25,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def create_user(username, password)
-      newAction = {"UserName" => username, "Password"=> password, "Oem" => {"Hp" => {"LoginName" => username}}}
+      newAction = { 'UserName' => username, 'Password' => password, 'Oem' => { 'Hp' => { 'LoginName' => username } } }
       response = rest_post('/redfish/v1/AccountService/Accounts/', body: newAction)
       response_handler(response)
       true
@@ -37,7 +37,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def change_password(username, password)
-      newAction = {"Password" => password}
+      newAction = { 'Password' => password }
       userhref = userhref('/redfish/v1/AccountService/Accounts/', username)
       response = rest_patch(userhref, body: newAction)
       response_handler(response)

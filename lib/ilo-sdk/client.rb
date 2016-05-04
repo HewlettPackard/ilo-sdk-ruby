@@ -19,17 +19,17 @@ module ILO_SDK
     def initialize(options = {})
       options = Hash[options.map { |k, v| [k.to_sym, v] }] # Convert string hash keys to symbols
       @logger = options[:logger] || Logger.new(STDOUT)
-      [:debug, :info, :warn, :error, :level=].each { |m| fail "Logger must respond to #{m} method " unless @logger.respond_to?(m) }
+      [:debug, :info, :warn, :error, :level=].each { |m| raise "Logger must respond to #{m} method " unless @logger.respond_to?(m) }
       @log_level = options[:log_level] || :info
       @logger.level = @logger.class.const_get(@log_level.upcase) rescue @log_level
       @host = options[:host]
-      fail 'Must set the host option' unless @host
+      raise 'Must set the host option' unless @host
       @ssl_enabled = options[:ssl_enabled].nil? ? true : options[:ssl_enabled]
-      fail 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
+      raise 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
       @logger.warn 'User option not set. Using default (Administrator)' unless options[:user]
       @user = options[:user] || 'Administrator'
       @password = options[:password]
-      fail 'Must set the password option' unless @password
+      raise 'Must set the password option' unless @password
     end
 
     include Rest

@@ -1,4 +1,4 @@
 # Gem version defined here
-module iloSDK
+module ILO_SDK
   VERSION = '0.1.0'.freeze
 end

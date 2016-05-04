@@ -14,7 +14,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_asset_tag(asset_tag)
-      newAction = {"AssetTag" => asset_tag}
+      newAction = { 'AssetTag' => asset_tag }
       response = rest_patch('/redfish/v1/Systems/1/', body: newAction)
       response_handler(response)
       true

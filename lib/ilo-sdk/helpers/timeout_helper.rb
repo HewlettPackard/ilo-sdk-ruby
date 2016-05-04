@@ -6,7 +6,7 @@ module ILO_SDK
     # @return [Fixnum] timeout
     def get_timeout
       response = rest_get('/redfish/v1/Managers/1/NetworkService/')
-      response_handler(response)["SessionTimeoutMinutes"]
+      response_handler(response)['SessionTimeoutMinutes']
     end
 
     # Set the Session Timeout Minutes
@@ -14,7 +14,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_timeout(timeout)
-      newAction = {"SessionTimeoutMinutes" => timeout}
+      newAction = { 'SessionTimeoutMinutes' => timeout }
       response = rest_patch('/redfish/v1/Managers/1/NetworkService/', body: newAction)
       response_handler(response)
       true

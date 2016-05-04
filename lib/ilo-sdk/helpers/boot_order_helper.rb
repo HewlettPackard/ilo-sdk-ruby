@@ -25,7 +25,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_boot_order(boot_order)
-      newAction = {'PersistentBootConfigOrder' => boot_order}
+      newAction = { 'PersistentBootConfigOrder' => boot_order }
       response = rest_patch('/redfish/v1/systems/1/bios/Boot/Settings/', body: newAction)
       response_handler(response)
       true
@@ -47,7 +47,7 @@ module ILO_SDK
       response = rest_get('/redfish/v1/Systems/1/')
       boottargets = response_handler(response)['Boot']['BootSourceOverrideSupported']
       raise "BootSourceOverrideTarget value - #{boot_target} is not supported. Valid values are: #{boottargets}" if not boottargets.include? boot_target
-      newAction = {"Boot" => {"BootSourceOverrideTarget" => boot_target}}
+      newAction = { 'Boot' => { 'BootSourceOverrideTarget' => boot_target } }
       response = rest_patch('/redfish/v1/Systems/1/', body: newAction)
       response_handler(response)
       true
@@ -58,14 +58,14 @@ module ILO_SDK
     # @return [Fixnum] boot_order_baseconfig
     def get_boot_order_baseconfig
       response = rest_get('/redfish/v1/Systems/1/bios/Boot/Settings/')
-      response_handler(response)["BaseConfig"]
+      response_handler(response)['BaseConfig']
     end
 
     # Revert the boot order
     # @raise [RuntimeError] if the request failed
     # @return [Fixnum] true
     def revert_boot_order
-      newAction = {"BaseConfig" => "default"}
+      newAction = { 'BaseConfig' => 'default' }
       response = rest_patch('/redfish/v1/Systems/1/bios/Boot/Settings/', body: newAction)
       response_handler(response)
       true

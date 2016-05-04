@@ -6,7 +6,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def clear_logs(log_type)
-      newAction = {"Action" => "ClearLog"}
+      newAction = { 'Action' => 'ClearLog' }
       response = rest_post("/redfish/v1/Managers/1/LogServices/#{log_type}/", body: newAction)
       response_handler(response)
       true
@@ -33,9 +33,9 @@ module ILO_SDK
       log_entries = []
       entries.each do |e|
         if !severity_level.nil?
-          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if e['Severity'] == severity_level and Time.parse(e['Created']) > (Time.now.utc - (duration*3600))
+          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if e['Severity'] == severity_level and Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
         else
-          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if Time.parse(e['Created']) > (Time.now.utc - (duration*3600))
+          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
         end
       end
       return log_entries

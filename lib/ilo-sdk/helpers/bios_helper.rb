@@ -5,7 +5,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def revert_bios
-      newAction = {"BaseConfig" => "default"}
+      newAction = { 'BaseConfig' => 'default' }
       response = rest_patch('/redfish/v1/systems/1/bios/Settings/', body: newAction)
       response_handler(response)
       true
@@ -93,7 +93,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_url_boot_file(url_boot_file)
-      newAction = {'UrlBootFile' => url_boot_file}
+      newAction = { 'UrlBootFile' => url_boot_file }
       response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: newAction)
       response_handler(response)
       true

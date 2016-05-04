@@ -5,7 +5,7 @@ require_relative './lib/ilo-sdk/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'ilo-sdk'
-  spec.version       = OneviewSDK::VERSION
+  spec.version       = ILO_SDK::VERSION
   spec.authors       = ['Anirudh Gupta', 'Bik Bajwa', 'Jared Smartt', 'Vivek Bhatia']
   spec.email         = ['anirudhg@hpe.com', 'bik.bajwa@hpe.com', 'jared.smartt@hpe.com', 'vivek.bhatia@hpe.com']
   spec.summary       = 'Gem to interact with iLO API'
@@ -24,6 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'rubocop', '= 0.36.0'
+  spec.add_development_dependency 'rubocop', '= 0.39.0'
 
 end
