@@ -1,1 +1,41 @@
+# See default at https://github.com/bbatsov/rubocop/blob/master/config/default.yml
 
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/LineLength:
+  Max: 150
+
+Metrics/ModuleLength:
+  Max: 150
+
+Style/IndentationWidth:
+  Width: 2
+
+Style/VariableName:
+  EnforcedStyle: snake_case
+
+
+Style/EmptyLines:
+  Enabled: false
+
+Style/RescueModifier:
+  Enabled: false
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Performance/Casecmp:
+  Enabled: false
