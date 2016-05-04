@@ -1,7 +1,7 @@
 require 'logger'
 require_relative 'rest'
 # Load all helpers:
-Dir[File.join(File.dirname(__FILE__), '*_helper.rb')].each { |file| require file }
+Dir[File.join(File.dirname(__FILE__), '/helpers/*.rb')].each { |file| require file }
 
 module ILO_SDK
   class Client
