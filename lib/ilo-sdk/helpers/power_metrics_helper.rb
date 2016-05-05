@@ -23,7 +23,7 @@ module ILO_SDK
         }
         power_supplies.push(power_supply)
       end
-      power_metrics = {
+      {
         @host => {
           'PowerCapacityWatts' => metrics['PowerCapacityWatts'],
           'PowerConsumedWatts' => metrics['PowerConsumedWatts'],

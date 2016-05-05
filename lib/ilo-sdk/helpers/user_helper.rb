@@ -5,18 +5,16 @@ module ILO_SDK
       response = rest_get(uri)
       items = response_handler(response)['Items']
       items.each do |it|
-        if it['UserName'] == username
-          return it['links']['self']['href']
-        end
+        return it['links']['self']['href'] if it['UserName'] == username
       end
     end
 
     # Get the users
     # @raise [RuntimeError] if the request failed
-    # @return [String] users
+    # @return [String[]] users
     def get_users
       response = rest_get('/redfish/v1/AccountService/Accounts/')
-      items = response_handler(response)['Items'].collect { |user| user['UserName'] }
+      response_handler(response)['Items'].collect { |user| user['UserName'] }
     end
 
     # Create a user

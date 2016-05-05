@@ -66,7 +66,7 @@ module ILO_SDK
     # @param [String, Symbol] ipv4_subnet_mask
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_bios_dhcp(value, ipv4_address='', ipv4_gateway='', ipv4_primary_dns='', ipv4_secondary_dns='', ipv4_subnet_mask='')
+    def set_bios_dhcp(value, ipv4_address = '', ipv4_gateway = '', ipv4_primary_dns = '', ipv4_secondary_dns = '', ipv4_subnet_mask = '')
       new_action = {
         'Dhcpv4' => value,
         'Ipv4Address' => ipv4_address,

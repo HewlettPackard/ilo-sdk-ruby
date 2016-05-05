@@ -23,9 +23,7 @@ module ILO_SDK
         }
         temp_details.push(temp_detail)
       end
-        thermal_metrics = {
-          @host => temp_details
-        }
+      { @host => temp_details }
     end
   end
 end

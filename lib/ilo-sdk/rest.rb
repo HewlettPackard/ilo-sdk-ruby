@@ -88,7 +88,7 @@ module ILO_SDK
       when RESPONSE_CODE_ACCEPTED # Asynchronous add, update or delete
         return JSON.parse(response.body) # TODO: Remove when tested
         # TODO: Make this actually wait for the task
-        @logger.debug "Waiting for task: response.header['location']"
+        @logger.debug "Waiting for task: #{response.header['location']}"
         task = wait_for(response.header['location'])
         return true unless task['associatedResource'] && task['associatedResource']['resourceUri']
         resource_data = rest_get(task['associatedResource']['resourceUri'])
