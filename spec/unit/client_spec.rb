@@ -18,26 +18,32 @@ RSpec.describe ILO_SDK::Client do
       expect { described_class.new({}) }.to raise_error(/Must set the host option/)
     end
 
+    it 'automatically prepends the host with "https://"' do
+      options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123' }
+      client = described_class.new(options)
+      expect(client.host).to eq('https://ilo.example.com')
+    end
+
     it 'requires the password attribute to be set' do
-      options = { host: 'https://ilo.example.com', user: 'Administrator' }
+      options = { host: 'ilo.example.com', user: 'Administrator' }
       expect { described_class.new(options) }.to raise_error(/Must set the password/)
     end
 
     it 'sets the username to "Administrator" by default' do
-      options = { host: 'https://ilo.example.com', password: 'secret123' }
+      options = { host: 'ilo.example.com', password: 'secret123' }
       client = nil
       expect { client = described_class.new(options) }.to output(/User option not set. Using default/).to_stdout_from_any_process
       expect(client.user).to eq('Administrator')
     end
 
     it 'allows the ssl_enabled attribute to be set' do
-      options = { host: 'https://ilo.example.com', user: 'Administrator', password: 'secret123', ssl_enabled: false }
+      options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123', ssl_enabled: false }
       client = described_class.new(options)
       expect(client.ssl_enabled).to eq(false)
     end
 
     it 'allows the log level to be set' do
-      options = { host: 'https://ilo.example.com', user: 'Administrator', password: 'secret123', log_level: :error }
+      options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123', log_level: :error }
       client = described_class.new(options)
       expect(client.log_level).to eq(:error)
     end

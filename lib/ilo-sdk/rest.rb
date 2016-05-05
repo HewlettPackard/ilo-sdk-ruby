@@ -13,7 +13,7 @@ module ILO_SDK
       raise 'Must specify type' unless type
       @logger.debug "Making :#{type} rest call to #{@host}#{path}"
 
-      uri = URI.parse(URI.escape('https://' + @host + path))
+      uri = URI.parse(URI.escape("#{@host}#{path}"))
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless @ssl_enabled
