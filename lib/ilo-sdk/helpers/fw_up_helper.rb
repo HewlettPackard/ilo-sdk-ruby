@@ -14,8 +14,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_fw_upgrade(uri)
-      newAction = { 'Action' => 'InstallFromURI', 'FirmwareURI' => uri }
-      response = rest_post('/redfish/v1/Managers/1/UpdateService/', body: newAction)
+      new_action = { 'Action' => 'InstallFromURI', 'FirmwareURI' => uri }
+      response = rest_post('/redfish/v1/Managers/1/UpdateService/', body: new_action)
       response_handler(response)
       true
     end

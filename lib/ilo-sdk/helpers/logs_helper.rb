@@ -6,8 +6,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def clear_logs(log_type)
-      newAction = { 'Action' => 'ClearLog' }
-      response = rest_post("/redfish/v1/Managers/1/LogServices/#{log_type}/", body: newAction)
+      new_action = { 'Action' => 'ClearLog' }
+      response = rest_post("/redfish/v1/Managers/1/LogServices/#{log_type}/", body: new_action)
       response_handler(response)
       true
     end

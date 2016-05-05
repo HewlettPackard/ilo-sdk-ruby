@@ -22,8 +22,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_snmp(snmp_mode, snmp_alerts)
-      newAction = { 'Mode' => snmp_mode, 'AlertsEnabled' => snmp_alerts }
-      response = rest_patch('/redfish/v1/Managers/1/SnmpService/', body: newAction)
+      new_action = { 'Mode' => snmp_mode, 'AlertsEnabled' => snmp_alerts }
+      response = rest_patch('/redfish/v1/Managers/1/SnmpService/', body: new_action)
       response_handler(response)
       true
     end

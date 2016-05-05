@@ -14,8 +14,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_power_state(state)
-      newAction = { 'Action' => 'Reset', 'ResetType' => state }
-      response = rest_post('/redfish/v1/Systems/1/', body: newAction)
+      new_action = { 'Action' => 'Reset', 'ResetType' => state }
+      response = rest_post('/redfish/v1/Systems/1/', body: new_action)
       response_handler(response)
       true
     end
@@ -24,8 +24,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def reset_ilo
-      newAction = { 'Action' => 'Reset' }
-      response = rest_post('/redfish/v1/Managers/1/', body: newAction)
+      new_action = { 'Action' => 'Reset' }
+      response = rest_post('/redfish/v1/Managers/1/', body: new_action)
       response_handler(response)
       true
     end

@@ -16,8 +16,8 @@ module ILO_SDK
     def set_time_zone(time_zone)
       time_response = rest_get('/redfish/v1/Managers/1/DateTime/')
       newTimeZone = response_handler(time_response)['TimeZoneList'].select {|timezone| timezone['Name'] == time_zone}
-      newAction = { 'TimeZone' => { 'Index' => newTimeZone[0]['Index'] } }
-      response = rest_patch('/redfish/v1/Managers/1/DateTime/', body: newAction)
+      new_action = { 'TimeZone' => { 'Index' => newTimeZone[0]['Index'] } }
+      response = rest_patch('/redfish/v1/Managers/1/DateTime/', body: new_action)
       response_handler(response)
       true
     end
@@ -35,8 +35,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_ntp(value)
-      newAction = { 'Oem' => { 'Hp' => { 'DHCPv4' => { 'UseNTPServers' => value } } } }
-      response = rest_patch('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: newAction)
+      new_action = { 'Oem' => { 'Hp' => { 'DHCPv4' => { 'UseNTPServers' => value } } } }
+      response = rest_patch('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: new_action)
       response_handler(response)
       true
     end
@@ -54,8 +54,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_ntp_servers(ntp_servers)
-      newAction = { 'StaticNTPServers' => ntp_servers }
-      response = rest_patch('/redfish/v1/Managers/1/DateTime/', body: newAction)
+      new_action = { 'StaticNTPServers' => ntp_servers }
+      response = rest_patch('/redfish/v1/Managers/1/DateTime/', body: new_action)
       response_handler(response)
       true
     end

@@ -14,8 +14,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_indicator_led(state)
-      newAction = { 'IndicatorLED' => state }
-      response = rest_patch('/redfish/v1/Systems/1/', body: newAction)
+      new_action = { 'IndicatorLED' => state }
+      response = rest_patch('/redfish/v1/Systems/1/', body: new_action)
       response_handler(response)
       true
     end
