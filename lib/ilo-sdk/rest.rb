@@ -27,7 +27,8 @@ module ILO_SDK
       msg += "\n  1. Install the certificate into your cert store"
       msg += ". Using cert store: #{ENV['SSL_CERT_FILE']}" if ENV['SSL_CERT_FILE']
       msg += "\n  2. Set the :ssl_enabled option to false for your ilo client"
-      raise "#{e.message}\n\n#{msg}\n\n"
+      @logger.error msg
+      raise e
     end
 
     # Make a restful GET request
