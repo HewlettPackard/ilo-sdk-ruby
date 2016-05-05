@@ -5,8 +5,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def revert_bios
-      newAction = { 'BaseConfig' => 'default' }
-      response = rest_patch('/redfish/v1/systems/1/bios/Settings/', body: newAction)
+      new_action = { 'BaseConfig' => 'default' }
+      response = rest_patch('/redfish/v1/systems/1/bios/Settings/', body: new_action)
       response_handler(response)
       true
     end
@@ -31,12 +31,12 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_uefi_shell_startup(value, location, url)
-      newAction = {
+      new_action = {
         'UefiShellStartup' => value,
         'UefiShellStartupLocation' => location,
         'UefiShellStartupUrl' => url
       }
-      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: newAction)
+      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: new_action)
       response_handler(response)
       true
     end
@@ -67,7 +67,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_bios_dhcp(value, ipv4_address='', ipv4_gateway='', ipv4_primary_dns='', ipv4_secondary_dns='', ipv4_subnet_mask='')
-      newAction = {
+      new_action = {
         'Dhcpv4' => value,
         'Ipv4Address' => ipv4_address,
         'Ipv4Gateway' => ipv4_gateway,
@@ -75,7 +75,7 @@ module ILO_SDK
         'Ipv4SecondaryDNS' => ipv4_secondary_dns,
         'Ipv4SubnetMask' => ipv4_subnet_mask
       }
-      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: newAction)
+      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: new_action)
       response_handler(response)
       true
     end
@@ -93,8 +93,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_url_boot_file(url_boot_file)
-      newAction = { 'UrlBootFile' => url_boot_file }
-      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: newAction)
+      new_action = { 'UrlBootFile' => url_boot_file }
+      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: new_action)
       response_handler(response)
       true
     end
@@ -117,11 +117,11 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_bios_service(name, email)
-      newAction = {
+      new_action = {
         'ServiceName' => name,
         'ServiceEmail' => email
       }
-      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: newAction)
+      response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: new_action)
       response_handler(response)
       true
     end

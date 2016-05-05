@@ -7,7 +7,7 @@ module ILO_SDK
     def get_all_boot_order
       response = rest_get('/redfish/v1/systems/1/bios/Boot/')
       boot = response_handler(response)
-      current_boot_order = {
+      {
         @host => boot['PersistentBootConfigOrder']
       }
     end
@@ -17,7 +17,7 @@ module ILO_SDK
     # @return [Fixnum] current_boot_order
     def get_boot_order
       response = rest_get('/redfish/v1/systems/1/bios/Boot/Settings/')
-      boot = response_handler(response)['PersistentBootConfigOrder']
+      response_handler(response)['PersistentBootConfigOrder']
     end
 
     # Set the boot order
@@ -25,8 +25,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_boot_order(boot_order)
-      newAction = { 'PersistentBootConfigOrder' => boot_order }
-      response = rest_patch('/redfish/v1/systems/1/bios/Boot/Settings/', body: newAction)
+      new_action = { 'PersistentBootConfigOrder' => boot_order }
+      response = rest_patch('/redfish/v1/systems/1/bios/Boot/Settings/', body: new_action)
       response_handler(response)
       true
     end
@@ -47,8 +47,8 @@ module ILO_SDK
       response = rest_get('/redfish/v1/Systems/1/')
       boottargets = response_handler(response)['Boot']['BootSourceOverrideSupported']
       raise "BootSourceOverrideTarget value - #{boot_target} is not supported. Valid values are: #{boottargets}" if not boottargets.include? boot_target
-      newAction = { 'Boot' => { 'BootSourceOverrideTarget' => boot_target } }
-      response = rest_patch('/redfish/v1/Systems/1/', body: newAction)
+      new_action = { 'Boot' => { 'BootSourceOverrideTarget' => boot_target } }
+      response = rest_patch('/redfish/v1/Systems/1/', body: new_action)
       response_handler(response)
       true
     end
@@ -65,8 +65,8 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return [Fixnum] true
     def revert_boot_order
-      newAction = { 'BaseConfig' => 'default' }
-      response = rest_patch('/redfish/v1/Systems/1/bios/Boot/Settings/', body: newAction)
+      new_action = { 'BaseConfig' => 'default' }
+      response = rest_patch('/redfish/v1/Systems/1/bios/Boot/Settings/', body: new_action)
       response_handler(response)
       true
     end

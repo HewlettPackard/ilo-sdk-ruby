@@ -1,4 +1,5 @@
 module ILO_SDK
+  # Contains helper methods for Thermal Metrics
   module Power_Metrics_Helper
     # Get the vital power metrics
     # @raise [RuntimeError] if the request failed
@@ -10,7 +11,6 @@ module ILO_SDK
       power_metrics_uri = response_handler(rest_get(chassis_uri))['links']['PowerMetrics']['href']
       response = rest_get(power_metrics_uri)
       metrics = response_handler(response)
-      binding.pry
       power_supplies = []
       metrics['PowerSupplies'].each do |ps|
         power_supply = {
@@ -27,8 +27,9 @@ module ILO_SDK
         @host => {
           'PowerCapacityWatts' => metrics['PowerCapacityWatts'],
           'PowerConsumedWatts' => metrics['PowerConsumedWatts'],
-          'PowerSupplies' => power_supplies }
+          'PowerSupplies' => power_supplies
         }
-      end
+      }
     end
   end
+end

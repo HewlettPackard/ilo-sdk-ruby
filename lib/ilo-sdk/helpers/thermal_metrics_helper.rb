@@ -1,4 +1,5 @@
 module ILO_SDK
+  # Contains helper methods for Thermal Metrics
   module Thermal_Metrics_Helper
     # Get the vital thermal metrics
     # @raise [RuntimeError] if the request failed

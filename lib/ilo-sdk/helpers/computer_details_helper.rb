@@ -19,12 +19,13 @@ module ILO_SDK
       details = response_handler(response)
       {
         'GeneralDetails' => {
-        'manufacturer' => details['Manufacturer'],
-        'model' => details['Model'],
-        'AssetTag' => details['AssetTag'],
-        'bios_version' => details['Bios']['Current']['VersionString'],
-        'memory' => details['Memory']['TotalSystemMemoryGB'].to_s + ' GB',
-        'processors' => details['Processors']['Count'].to_s + ' x ' + details['Processors']['ProcessorFamily'].to_s }
+          'manufacturer' => details['Manufacturer'],
+          'model' => details['Model'],
+          'AssetTag' => details['AssetTag'],
+          'bios_version' => details['Bios']['Current']['VersionString'],
+          'memory' => details['Memory']['TotalSystemMemoryGB'].to_s + ' GB',
+          'processors' => details['Processors']['Count'].to_s + ' x ' + details['Processors']['ProcessorFamily'].to_s
+        }
       }
     end
 
@@ -72,7 +73,7 @@ module ILO_SDK
       array_controllers = []
       response = rest_get(storages['links']['ArrayControllers']['href'])
       array_ctrls = response_handler(response)
-      if array_ctrls['links'].has_key? 'Member'
+      if array_ctrls['links'].key? 'Member'
         array_ctrls['links']['Member'].each do |array_controller|
           response = rest_get(array_controller['href'])
           controller = response_handler(response)
@@ -116,13 +117,13 @@ module ILO_SDK
               data_drives.push(dd)
             end
             ld = {
-                'Size' => lds['CapacityMiB'],
-                'Raid' => lds['Raid'],
-                'Status' => lds['Status']['State'],
-                'Health' => lds['Status']['Health'],
-                'DataDrives' => data_drives
-              }
-              logical_drives.push(ld)
+              'Size' => lds['CapacityMiB'],
+              'Raid' => lds['Raid'],
+              'Status' => lds['Status']['State'],
+              'Health' => lds['Status']['Health'],
+              'DataDrives' => data_drives
+            }
+            logical_drives.push(ld)
           end
           ac = {
             'Model' => controller['Model'],
