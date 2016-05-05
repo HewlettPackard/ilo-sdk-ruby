@@ -23,6 +23,9 @@ Style/VariableName:
   EnforcedStyle: snake_case
 
 
+Style/AccessorMethodName:
+  Enabled: false
+
 Style/ClassAndModuleCamelCase:
   Enabled: false
 
