@@ -3,7 +3,7 @@ require_relative './../spec_helper'
 RSpec.describe ILO_SDK::Client do
   include_context 'shared context'
 
-  let(:path) { '/redfish/v1/Systems' }
+  let(:path) { '/redfish/v1/fake' }
   let(:data) { { 'name' => 'Fake', 'description' => 'Fake Resource', 'uri' => path } }
 
   describe '#rest_api' do

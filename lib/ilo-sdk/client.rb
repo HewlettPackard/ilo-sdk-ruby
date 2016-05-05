@@ -10,9 +10,9 @@ module ILO_SDK
 
     # Create a client object
     # @param [Hash] options the options to configure the client
-    # @option options [String] :host URL of OneView appliance
-    # @option options [String] :user ('Administrator') Username to use for authentication with OneView appliance
-    # @option options [String] :password Password to use for authentication with OneView appliance
+    # @option options [String] :host URL, hostname, or IP address of the iLO
+    # @option options [String] :user ('Administrator') Username to use for authentication with the iLO
+    # @option options [String] :password Password to use for authentication with the iLO
     # @option options [Logger] :logger (Logger.new(STDOUT)) Logger object to use.
     #   Must implement debug(String), info(String), warn(String), error(String), & level=
     # @option options [Symbol] :log_level (:info) Log level. Logger must define a constant with this name. ie Logger::INFO
@@ -25,6 +25,7 @@ module ILO_SDK
       @logger.level = @logger.class.const_get(@log_level.upcase) rescue @log_level
       @host = options[:host]
       raise 'Must set the host option' unless @host
+      @host = 'https://' + @host unless @host.start_with?('http://', 'https://')
       @ssl_enabled = options[:ssl_enabled].nil? ? true : options[:ssl_enabled]
       raise 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
       @logger.warn 'User option not set. Using default (Administrator)' unless options[:user]
