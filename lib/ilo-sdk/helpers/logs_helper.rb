@@ -32,10 +32,10 @@ module ILO_SDK
       entries = response_handler(response)['Items']
       log_entries = []
       entries.each do |e|
-        if !severity_level.nil?
-          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if e['Severity'] == severity_level && Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
-        else
+        if severity_level.nil?
           log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
+        elsif e['Severity'] == severity_level && Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
+          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}")
         end
       end
       log_entries

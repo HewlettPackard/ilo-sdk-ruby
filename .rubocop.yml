@@ -9,6 +9,9 @@ Metrics/LineLength:
 Metrics/ModuleLength:
   Max: 150
 
+Metrics/ParameterLists:
+  Max: 6
+
 Style/FileName:
   Exclude:
     - 'lib/ilo-sdk.rb'

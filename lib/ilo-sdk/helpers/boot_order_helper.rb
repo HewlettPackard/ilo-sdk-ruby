@@ -46,7 +46,9 @@ module ILO_SDK
     def set_temporary_boot_order(boot_target)
       response = rest_get('/redfish/v1/Systems/1/')
       boottargets = response_handler(response)['Boot']['BootSourceOverrideSupported']
-      raise "BootSourceOverrideTarget value - #{boot_target} is not supported. Valid values are: #{boottargets}" if not boottargets.include? boot_target
+      unless boottargets.include? boot_target
+        raise "BootSourceOverrideTarget value - #{boot_target} is not supported. Valid values are: #{boottargets}"
+      end
       new_action = { 'Boot' => { 'BootSourceOverrideTarget' => boot_target } }
       response = rest_patch('/redfish/v1/Systems/1/', body: new_action)
       response_handler(response)

@@ -4,6 +4,7 @@ require_relative 'rest'
 Dir[File.join(File.dirname(__FILE__), '/helpers/*.rb')].each { |file| require file }
 
 module ILO_SDK
+  # The client defines the connection to the iLO and handles communication with it
   class Client
     attr_accessor :host, :user, :password, :ssl_enabled, :logger, :log_level
 
