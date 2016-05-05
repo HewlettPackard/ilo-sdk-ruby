@@ -19,10 +19,115 @@ TODO: Description
   ```
 
 
-## Configuration
+## Client
+Everything you do with this API happens through a client object. 
+Creating the client object is the first step; then you can perform actions on the client.
+
+```ruby 
+require 'ilo-sdk'
+client = OneviewSDK::Client.new(
+  host: 'https://ilo.example.com',
+  user: 'Administrator',              # This is the default
+  password: 'secret123',
+  ssl_enabled: true,                  # This is the default and strongly encouraged
+  logger: Logger.new(STDOUT),         # This is the default
+  log_level: :info,                   # This is the default
+)
+```
+
+:lock: Tip: Check the file permissions because the password is stored in clear-text.
+
+**Environment Variables**
 
 TODO
 
+### Custom logging
+The default logger is a standard logger to STDOUT, but if you want to specify your own, you can.  However, your logger must implement the following methods:
+
+```ruby
+debug(String)
+info(String)
+warn(String)
+error(String)
+level=(Symbol, etc.) # The parameter here will be the log_level attribute
+```
+
+
+## Actions
+Actions are performed on the client, and defined in the [helper modules](lib/ilo-sdk/helpers). 
+
+#### Asset Tag
+TODO
+
+#### BIOS
+TODO
+
+#### Boot Order
+TODO
+
+### Comupter Details
+TODO
+
+### Firmware
+TODO
+
+### Indicator LED
+TODO
+
+### Logs
+TODO
+
+### Power Metrics
+TODO
+
+### Power Management
+TODO
+
+### Registry
+TODO
+
+### Schema
+TODO
+
+### SNMP
+TODO
+
+### Thermal Metrics
+TODO
+
+### Time Zone
+TODO
+
+### Timeout
+TODO
+
+### UEFI
+TODO
+
+### Users
+TODO
+
+### Virtual Media
+TODO
+
+
+## Custom requests
+In most cases, interacting with the client object is enough, but sometimes you need to make your own custom requests to the iLO.
+This project makes it extremely easy to do with some built-in methods for the client object. Here are some examples:
+
+```ruby
+# Get a list of schemas:
+response = client.rest_api(:get, '/rest/v1/Schemas')
+# or even more simple:
+response = client.rest_get('/rest/v1/Schemas')
+
+# Then we can validate the response and convert the response body into a hash...
+data = client.response_handler(response)
+```
+
+This example is about as basic as it gets, but you can make any type of iLO request.
+If a resource does not do what you need, this will allow you to do it.
+Please refer to the documentation and [code](lib/ilo-sdk/rest.rb) for complete list of methods and information about how to use them.
 
 ## License
 This project is licensed under the Apache 2.0 license. Please see [LICENSE](LICENSE) for more info.
