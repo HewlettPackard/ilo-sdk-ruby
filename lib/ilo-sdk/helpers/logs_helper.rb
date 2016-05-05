@@ -33,12 +33,12 @@ module ILO_SDK
       log_entries = []
       entries.each do |e|
         if !severity_level.nil?
-          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if e['Severity'] == severity_level and Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
+          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if e['Severity'] == severity_level && Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
         else
           log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
         end
       end
-      return log_entries
+      log_entries
     end
   end
 end

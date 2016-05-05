@@ -125,7 +125,7 @@ module ILO_SDK
         raise "Invalid rest call: #{type}"
       end
       options['Content-Type'] ||= 'application/json'
-      options.delete('Content-Type')  if [:none, 'none', nil].include?(options['Content-Type'])
+      options.delete('Content-Type') if [:none, 'none', nil].include?(options['Content-Type'])
       auth = true
       if [:none, 'none'].include?(options['auth'])
         options.delete('auth')
@@ -146,6 +146,5 @@ module ILO_SDK
       request.basic_auth(@user, @password) if auth
       request
     end
-
   end
 end

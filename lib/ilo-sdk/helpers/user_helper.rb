@@ -16,7 +16,7 @@ module ILO_SDK
     # @return [String] users
     def get_users
       response = rest_get('/redfish/v1/AccountService/Accounts/')
-      items = response_handler(response)['Items'].collect {|user| user['UserName']}
+      items = response_handler(response)['Items'].collect { |user| user['UserName'] }
     end
 
     # Create a user

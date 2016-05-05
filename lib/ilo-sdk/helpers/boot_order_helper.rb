@@ -7,7 +7,7 @@ module ILO_SDK
     def get_all_boot_order
       response = rest_get('/redfish/v1/systems/1/bios/Boot/')
       boot = response_handler(response)
-      current_boot_order = {
+      {
         @host => boot['PersistentBootConfigOrder']
       }
     end
@@ -17,7 +17,7 @@ module ILO_SDK
     # @return [Fixnum] current_boot_order
     def get_boot_order
       response = rest_get('/redfish/v1/systems/1/bios/Boot/Settings/')
-      boot = response_handler(response)['PersistentBootConfigOrder']
+      response_handler(response)['PersistentBootConfigOrder']
     end
 
     # Set the boot order

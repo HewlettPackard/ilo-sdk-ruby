@@ -15,8 +15,8 @@ module ILO_SDK
     # @return true
     def set_time_zone(time_zone)
       time_response = rest_get('/redfish/v1/Managers/1/DateTime/')
-      newTimeZone = response_handler(time_response)['TimeZoneList'].select {|timezone| timezone['Name'] == time_zone}
-      new_action = { 'TimeZone' => { 'Index' => newTimeZone[0]['Index'] } }
+      new_time_zone = response_handler(time_response)['TimeZoneList'].select { |timezone| timezone['Name'] == time_zone }
+      new_action = { 'TimeZone' => { 'Index' => new_time_zone[0]['Index'] } }
       response = rest_patch('/redfish/v1/Managers/1/DateTime/', body: new_action)
       response_handler(response)
       true
@@ -59,6 +59,5 @@ module ILO_SDK
       response_handler(response)
       true
     end
-
   end
 end

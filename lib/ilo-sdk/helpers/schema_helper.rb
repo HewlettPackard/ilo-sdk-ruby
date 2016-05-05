@@ -8,7 +8,7 @@ module ILO_SDK
     def get_schema(schema_prefix)
       response = rest_get('/redfish/v1/Schemas/')
       schemas = response_handler(response)['Items']
-      schema = schemas.select {|schema| schema['Schema'].start_with?(schema_prefix)}
+      schema = schemas.select { |s| s['Schema'].start_with?(schema_prefix) }
       raise "NO schema found with this schema prefix : #{schema_prefix}" if schema.empty?
       info = []
       schema.each do |sc|
@@ -16,7 +16,7 @@ module ILO_SDK
         schema_store = response_handler(response)
         info.push(schema_store)
       end
-      return info
+      info
     end
   end
 end
