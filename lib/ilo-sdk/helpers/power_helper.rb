@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for Power Management actions
-  module Powermgmt_Helper
+  # Contains helper methods for Power actions
+  module Power_Helper
     # Get the Power State
     # @raise [RuntimeError] if the request failed
     # @return [String] state
