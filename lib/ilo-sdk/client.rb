@@ -39,7 +39,6 @@ module ILO_SDK
     # Include helper modules:
     include Timeout_Helper
     include Time_Zone_Helper
-    include Boot_Order_Helper
     include Computer_Details_Helper
     include Power_Metrics_Helper
     include Thermal_Metrics_Helper
@@ -53,5 +52,6 @@ module ILO_SDK
     include Bios_Helper
     include FW_Up_Helper
     include Virtual_Media_Helper
+    include Computer_System_Helper
   end
 end

@@ -1,6 +1,6 @@
 module ILO_SDK
   # Contains helper methods for Computer System actions
-  module ComputerSystem_Helper
+  module Computer_System_Helper
     # Get the Asset Tag
     # @raise [RuntimeError] if the request failed
     # @return [String] asset_tag
