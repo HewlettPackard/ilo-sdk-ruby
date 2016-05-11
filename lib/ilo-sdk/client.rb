@@ -37,21 +37,19 @@ module ILO_SDK
     include Rest
 
     # Include helper modules:
-    include Timeout_Helper
-    include Time_Zone_Helper
+    include Manager_Network_Protocol_Helper
+    include Date_Time_Helper
     include Computer_Details_Helper
-    include Power_Metrics_Helper
-    include Thermal_Metrics_Helper
-    include SNMP_Helper
+    include SNMP_Service_Helper
     include Power_Helper
-    include User_Helper
-    include Schema_Helper
-    include Registry_Helper
-    include Logs_Helper
-    include UEFI_Helper
+    include Account_Service_Helper
+    include Log_Entry_Helper
+    include Secure_Boot_Helper
     include Bios_Helper
-    include FW_Up_Helper
+    include FW_SW_Version_Inventory_Helper
     include Virtual_Media_Helper
     include Computer_System_Helper
+    include Chassis_Helper
+    include Service_Root_Helper
   end
 end

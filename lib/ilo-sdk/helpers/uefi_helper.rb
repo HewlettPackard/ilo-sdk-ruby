@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for UEFI actions
-  module UEFI_Helper
+  # Contains helper methods for Secure Boot actions
+  module Secure_Boot_Helper
     # Get the UEFI secure boot
     # @raise [RuntimeError] if the request failed
     # @return [String] SecureBootEnable

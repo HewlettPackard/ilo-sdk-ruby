@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for user actions
-  module User_Helper
+  # Contains helper methods for Account Service actions
+  module Account_Service_Helper
     def userhref(uri, username)
       response = rest_get(uri)
       items = response_handler(response)['Items']

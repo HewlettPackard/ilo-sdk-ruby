@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for Firmware Upgrade actions
-  module FW_Up_Helper
+  # Contains helper methods for Firmware Software Inventory actions
+  module FW_SW_Version_Inventory_Helper
     # Get the Firmware Version
     # @raise [RuntimeError] if the request failed
     # @return [String] fw_version

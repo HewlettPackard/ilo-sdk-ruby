@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for indicator LED actions
-  module Timeout_Helper
+  # Contains helper methods for Manager Network Protocol actions
+  module Manager_Network_Protocol_Helper
     # Get the Session Timeout Minutes
     # @raise [RuntimeError] if the request failed
     # @return [Fixnum] timeout

@@ -1,5 +1,5 @@
 module ILO_SDK
-  # Contains helper methods for indicator Virtual Media actions
+  # Contains helper methods for Virtual Media actions
   module Virtual_Media_Helper
     # Get the Virtual Media Information
     # @raise [RuntimeError] if the request failed
