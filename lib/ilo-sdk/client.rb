@@ -46,7 +46,7 @@ module ILO_SDK
     include Log_Entry_Helper
     include Secure_Boot_Helper
     include Bios_Helper
-    include FW_SW_Version_Inventory_Helper
+    include Firmware_Update_Helper
     include Virtual_Media_Helper
     include Computer_System_Helper
     include Chassis_Helper
