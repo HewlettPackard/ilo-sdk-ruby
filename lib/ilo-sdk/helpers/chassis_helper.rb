@@ -47,7 +47,6 @@ module ILO_SDK
           'CriticalThreshold' => temp['LowerThresholdCritical'],
           'Health' => temp['Status']['Health'],
           'State' => temp['Status']['State']
-
         }
         temp_details.push(temp_detail)
       end
