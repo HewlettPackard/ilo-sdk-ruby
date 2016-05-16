@@ -1,6 +1,14 @@
 module ILO_SDK
   # Contains helper methods for Bios actions
   module Bios_Helper
+    # Get the bios base config
+    # @raise [RuntimeError] if the request failed
+    # @return [Fixnum] bios_baseconfig
+    def get_bios_baseconfig
+      response = rest_get('/redfish/v1/Systems/1/bios/Boot/Settings/')
+      response_handler(response)['BaseConfig']
+    end
+
     # Revert the BIOS
     # @raise [RuntimeError] if the request failed
     # @return true
@@ -30,11 +38,11 @@ module ILO_SDK
     # @param [String, Symbol] url
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_uefi_shell_startup(value, location, url)
+    def set_uefi_shell_startup(uefi_shell_startup, uefi_shell_startup_location, uefi_shell_startup_url)
       new_action = {
-        'UefiShellStartup' => value,
-        'UefiShellStartupLocation' => location,
-        'UefiShellStartupUrl' => url
+        'UefiShellStartup' => uefi_shell_startup,
+        'UefiShellStartupLocation' => uefi_shell_startup_location,
+        'UefiShellStartupUrl' => uefi_shell_startup_url
       }
       response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: new_action)
       response_handler(response)
@@ -58,7 +66,7 @@ module ILO_SDK
     end
 
     # Set the UEFI shell start up
-    # @param [String, Symbol] value
+    # @param [String, Symbol] dhcpv4
     # @param [String, Symbol] ipv4_address
     # @param [String, Symbol] ipv4_gateway
     # @param [String, Symbol] ipv4_primary_dns
@@ -66,9 +74,9 @@ module ILO_SDK
     # @param [String, Symbol] ipv4_subnet_mask
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_bios_dhcp(value, ipv4_address = '', ipv4_gateway = '', ipv4_primary_dns = '', ipv4_secondary_dns = '', ipv4_subnet_mask = '')
+    def set_bios_dhcp(dhcpv4, ipv4_address = '', ipv4_gateway = '', ipv4_primary_dns = '', ipv4_secondary_dns = '', ipv4_subnet_mask = '')
       new_action = {
-        'Dhcpv4' => value,
+        'Dhcpv4' => dhcpv4,
         'Ipv4Address' => ipv4_address,
         'Ipv4Gateway' => ipv4_gateway,
         'Ipv4PrimaryDNS' => ipv4_primary_dns,
@@ -122,6 +130,60 @@ module ILO_SDK
         'ServiceEmail' => email
       }
       response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: new_action)
+      response_handler(response)
+      true
+    end
+
+    # Dump the boot order
+    # @raise [RuntimeError] if the request failed
+    # @return [Fixnum] current_boot_order
+    def get_all_boot_order
+      response = rest_get('/redfish/v1/systems/1/bios/Boot/')
+      boot = response_handler(response)
+      {
+        @host => boot['PersistentBootConfigOrder']
+      }
+    end
+
+    # Get the boot order
+    # @raise [RuntimeError] if the request failed
+    # @return [Fixnum] current_boot_order
+    def get_boot_order
+      response = rest_get('/redfish/v1/systems/1/bios/Boot/Settings/')
+      response_handler(response)['PersistentBootConfigOrder']
+    end
+
+    # Set the boot order
+    # @param [Fixnum] boot_order
+    # @raise [RuntimeError] if the request failed
+    # @return true
+    def set_boot_order(boot_order)
+      new_action = { 'PersistentBootConfigOrder' => boot_order }
+      response = rest_patch('/redfish/v1/systems/1/bios/Boot/Settings/', body: new_action)
+      response_handler(response)
+      true
+    end
+
+    # Get the temporary boot order
+    # @raise [RuntimeError] if the request failed
+    # @return [Fixnum] temporary_boot_order
+    def get_temporary_boot_order
+      response = rest_get('/redfish/v1/Systems/1/')
+      response_handler(response)['Boot']['BootSourceOverrideTarget']
+    end
+
+    # Set the temporary boot order
+    # @param [Fixnum] boot_target
+    # @raise [RuntimeError] if the request failed
+    # @return true
+    def set_temporary_boot_order(boot_target)
+      response = rest_get('/redfish/v1/Systems/1/')
+      boottargets = response_handler(response)['Boot']['BootSourceOverrideSupported']
+      unless boottargets.include? boot_target
+        raise "BootSourceOverrideTarget value - #{boot_target} is not supported. Valid values are: #{boottargets}"
+      end
+      new_action = { 'Boot' => { 'BootSourceOverrideTarget' => boot_target } }
+      response = rest_patch('/redfish/v1/Systems/1/', body: new_action)
       response_handler(response)
       true
     end

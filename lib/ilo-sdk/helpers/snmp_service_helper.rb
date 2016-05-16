@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for snmp actions
-  module SNMP_Helper
+  # Contains helper methods for SNMP Service actions
+  module SNMP_Service_Helper
     # Get the SNMP Mode
     # @raise [RuntimeError] if the request failed
     # @return [String] mode

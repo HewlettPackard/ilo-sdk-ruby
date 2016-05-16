@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for Logs actions
-  module Logs_Helper
+  # Contains helper methods for Log Entry actions
+  module Log_Entry_Helper
     # Clear the specified logs
     # @param [String, Symbol] log_type
     # @raise [RuntimeError] if the request failed

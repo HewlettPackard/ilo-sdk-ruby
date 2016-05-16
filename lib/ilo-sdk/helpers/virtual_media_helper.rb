@@ -1,5 +1,5 @@
 module ILO_SDK
-  # Contains helper methods for indicator Virtual Media actions
+  # Contains helper methods for Virtual Media actions
   module Virtual_Media_Helper
     # Get the Virtual Media Information
     # @raise [RuntimeError] if the request failed
@@ -22,7 +22,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return [TrueClass, FalseClass] inserted
     def virtual_media_inserted?(id)
-      response = rest_get('/redfish/v1/Managers/1/VirtualMedia/2/')
+      response = rest_get("/redfish/v1/Managers/1/VirtualMedia/#{id}/")
       response_handler(response)['Inserted']
     end
 

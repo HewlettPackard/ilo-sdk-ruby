@@ -1,6 +1,6 @@
 module ILO_SDK
-  # Contains helper methods for indicator LED actions
-  module Time_Zone_Helper
+  # Contains helper methods for Date and Time actions
+  module Date_Time_Helper
     # Get the Time Zone
     # @raise [RuntimeError] if the request failed
     # @return [String] time_zone
