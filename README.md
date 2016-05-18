@@ -20,10 +20,10 @@ TODO: Description
 
 
 ## Client
-Everything you do with this API happens through a client object. 
+Everything you do with this API happens through a client object.
 Creating the client object is the first step; then you can perform actions on the client.
 
-```ruby 
+```ruby
 require 'ilo-sdk'
 client = OneviewSDK::Client.new(
   host: 'https://ilo.example.com',
@@ -54,62 +54,58 @@ level=(Symbol, etc.) # The parameter here will be the log_level attribute
 
 
 ## Actions
-Actions are performed on the client, and defined in the [helper modules](lib/ilo-sdk/helpers). 
+Actions are performed on the client, and defined in the [helper modules](lib/ilo-sdk/helpers).
 
-#### Asset Tag
+#### Account Service
+```ruby
+# Get list of users:
+users = client.get_users
+# Create a user:
+client.create_user(username, password123)
+# Change a user's password:
+client.change_password(username, newpassword123)
+# Delete a user:
+client.delete_user(username)
+```
+
+#### Bios
 TODO
 
-#### BIOS
+#### Chassis
 TODO
 
-#### Boot Order
+#### Computer Details
 TODO
 
-### Comupter Details
+#### Computer System
 TODO
 
-### Firmware
+#### Date Time
 TODO
 
-### Indicator LED
+#### Firmware
 TODO
 
-### Logs
+#### Log Entry
 TODO
 
-### Power Metrics
+#### Manager Network Protocol
 TODO
 
-### Power Management
+#### Power
 TODO
 
-### Registry
+#### Secure Boot
 TODO
 
-### Schema
+#### Service Root
 TODO
 
-### SNMP
+#### SNMP
 TODO
 
-### Thermal Metrics
+#### Virtual Media
 TODO
-
-### Time Zone
-TODO
-
-### Timeout
-TODO
-
-### UEFI
-TODO
-
-### Users
-TODO
-
-### Virtual Media
-TODO
-
 
 ## Custom requests
 In most cases, interacting with the client object is enough, but sometimes you need to make your own custom requests to the iLO.
