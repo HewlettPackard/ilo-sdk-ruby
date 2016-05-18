@@ -1,3 +1,8 @@
+require 'uri'
+require 'net/http'
+require 'openssl'
+require 'json'
+
 module ILO_SDK
   # Contains all the methods for making API REST calls
   module Rest
