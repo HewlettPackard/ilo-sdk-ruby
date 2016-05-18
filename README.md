@@ -61,15 +61,62 @@ Actions are performed on the client, and defined in the [helper modules](lib/ilo
 # Get list of users:
 users = client.get_users
 # Create a user:
-client.create_user(username, password123)
+client.create_user('user1', 'password123')
 # Change a user's password:
-client.change_password(username, newpassword123)
+client.change_password('user1', 'newpassword123')
 # Delete a user:
-client.delete_user(username)
+client.delete_user('user1')
 ```
 
 #### Bios
-TODO
+```ruby
+# Get BIOS Base Configuration:
+baseconfig = client.get_bios_baseconfig
+# Revert BIOS:
+client.revert_bios
+# Get UEFI shell startup settings:
+uefi_shell_startup = client.get_uefi_shell_startup
+# Set UEFI shell startup settings:
+uefi_shell_startup_location = 'Auto'
+uefi_shell_startup_url = 'http://wwww.uefi.com'
+client.uefi_shell_startup('Enabled', uefi_shell_startup_location, uefi_shell_startup_url)
+# Get BIOS DHCP settings:
+bios_dhcp = client.get_bios_dhcp
+# Set BIOS DHCP settings:
+ipv4_address = '10.1.1.111'
+ipv4_gateway = '10.1.1.0'
+ipv4_primary_dns = '10.1.1.1'
+ipv4_secondary_dns = '10.1.1.2'
+ipv4_subnet_mark = '255.255.255.0'
+client.set_bios_dhcp('Disabled', ipv4_address, ipv4_gateway, ipv4_primary_dns, ipv4_secondary_dns, ipv4_subnet_mark)
+# Get the URL Boot File:
+url_boot_file = client.get_url_boot_file
+# Set the URL Boot File:
+client.set_url_boot_file('http://www.urlbootfile.iso')
+# Get BIOS Service settings:
+bios_service_settings = client.get_bios_service
+# Set BIOS Service settings:
+service_name = 'my_name'
+service_email = 'my_name@hpe.com'
+client.set_bios_service(service_name, service_email)
+# Get Boot Order:
+boot_order = client.get_boot_order
+# Set Boot Order:
+client.set_boot_order([
+    "Generic.USB.1.1",
+    "NIC.LOM.1.1.IPv4",
+    "NIC.LOM.1.1.IPv6",
+    "NIC.Slot.1.1.IPv6",
+    "HD.Emb.5.2",
+    "HD.Emb.5.1",
+    "NIC.Slot.1.1.IPv4"
+])
+# Get Temporary Boot Order:
+temporary_boot_order = client.get_temporary_boot_order
+# Set Temporary Boot Order:
+boot_source_override_target = 'CD'
+client.set_temporary_boot_order(boot_source_override_target)
+```
 
 #### Chassis
 TODO
