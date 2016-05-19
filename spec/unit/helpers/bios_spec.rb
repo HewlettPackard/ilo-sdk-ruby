@@ -144,19 +144,6 @@ RSpec.describe ILO_SDK::Client do
     end
   end
 
-  describe '#get_all_boot_order' do
-    it 'makes a GET rest call' do
-      fake_response = FakeResponse.new('PersistentBootConfigOrder' => 'PersistentBootConfigOrder')
-      expect(@client).to receive(:rest_get).with('/redfish/v1/systems/1/bios/Boot/').and_return(fake_response)
-      boot_order = @client.get_all_boot_order
-      expect(boot_order).to eq(
-        {
-          @client.host => 'PersistentBootConfigOrder'
-        }
-      )
-    end
-  end
-
   describe '#get_boot_order' do
     it 'makes a GET rest call' do
       fake_response = FakeResponse.new('PersistentBootConfigOrder' => 'PersistentBootConfigOrder')
