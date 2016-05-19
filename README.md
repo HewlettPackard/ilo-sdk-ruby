@@ -70,7 +70,7 @@ client.delete_user('user1')
 
 #### Bios
 ```ruby
-# Get BIOS Base Configuration:
+# Get BIOS base configuration:
 baseconfig = client.get_bios_baseconfig
 # Revert BIOS:
 client.revert_bios
@@ -89,19 +89,19 @@ ipv4_primary_dns = '10.1.1.1'
 ipv4_secondary_dns = '10.1.1.2'
 ipv4_subnet_mark = '255.255.255.0'
 client.set_bios_dhcp('Disabled', ipv4_address, ipv4_gateway, ipv4_primary_dns, ipv4_secondary_dns, ipv4_subnet_mark)
-# Get the URL Boot File:
+# Get the URL boot file:
 url_boot_file = client.get_url_boot_file
-# Set the URL Boot File:
+# Set the URL boot file:
 client.set_url_boot_file('http://www.urlbootfile.iso')
-# Get BIOS Service settings:
+# Get BIOS service settings:
 bios_service_settings = client.get_bios_service
-# Set BIOS Service settings:
+# Set BIOS service settings:
 service_name = 'my_name'
 service_email = 'my_name@hpe.com'
 client.set_bios_service(service_name, service_email)
-# Get Boot Order:
+# Get boot order:
 boot_order = client.get_boot_order
-# Set Boot Order:
+# Set boot order:
 client.set_boot_order([
     "Generic.USB.1.1",
     "NIC.LOM.1.1.IPv4",
@@ -111,48 +111,144 @@ client.set_boot_order([
     "HD.Emb.5.1",
     "NIC.Slot.1.1.IPv4"
 ])
-# Get Temporary Boot Order:
+# Get temporary boot order:
 temporary_boot_order = client.get_temporary_boot_order
-# Set Temporary Boot Order:
+# Set temporary boot order:
 boot_source_override_target = 'CD'
 client.set_temporary_boot_order(boot_source_override_target)
 ```
 
 #### Chassis
-TODO
+```ruby
+# Get power metrics information:
+power_metrics = client.get_power_metrics
+# Get thermal metrics information:
+thermal_metrics = client.get_thermal_metrics
+```
 
 #### Computer Details
-TODO
+```ruby
+# Get computer details (including general, network, and array controller details):
+computer_details = client.get_computer_details
+# Get general computer details:
+general_details = client.get_general_computer_details
+# Get computer network details:
+network_details = client.get_computer_network_details
+# Get array controller details:
+array_controller_details = client.get_array_controller_details
+```
 
 #### Computer System
-TODO
+```ruby
+# Get the computer system asset tag:
+asset_tag = client.get_asset_tag
+# Set the computer system asset tag:
+client.set_asset_tag('HP001')
+# Get the indicator led state:
+indicator_led = client.get_indicator_led
+# Set the indicator led state:
+client.set_indicator_led('Lit')
+```
 
 #### Date Time
-TODO
+```ruby
+# Get the time zone:
+time_zone = client.get_time_zone
+# Set the time zone:
+client.set_time_zone('Africa/Abidjan')
+# Get whether or not NTP servers are in use (true or false):
+ntp_server_use = client.get_ntp
+# Set whether or not to use NTP servers:
+client.set_ntp(true)
+# Get a list of NTP servers:
+ntp_servers = client.get_ntp_servers
+# Set the NTP servers:
+ntp_servers = ['10.1.1.1', '10.1.1.2']
+client.set_ntp_server(ntp_servers)
+```
 
 #### Firmware
-TODO
+```ruby
+# Get the firmware version:
+fw_version = client.get_fw_version
+# Set the firmware URI for a firmware upgrade:
+client.set_fw_upgrade('www.firmwareupgrade.com')
+```
 
 #### Log Entry
-TODO
+```ruby
+# Clear a specific type of logs:
+log_type = 'IEL'
+client.clear_logs(log_type)
+# Check to see if a specific type of logs are empty:
+empty = client.logs_empty?(log_type)
+# Get a specific type of logs based on severity level and duration:
+severity_level = 'OK'
+duration = 10 # hours
+logs = client.get_log(severity_level, duration, log_type)
+```
 
 #### Manager Network Protocol
-TODO
+```ruby
+# Get the minutes until session timeout:
+timeout = client.get_timeout
+# Set the minutes until session timeout:
+client.set_timeout(60)
+```
 
 #### Power
-TODO
+```ruby
+# Get the power state of the system:
+power_state = client.get_power_state
+# Set the power state of the system:
+client.set_power_state('On')
+# Reset the iLO:
+client.reset_ilo
+```
 
 #### Secure Boot
-TODO
+```ruby
+# Get whether or not UEFI secure boot is enabled:
+uefi_secure_boot = client.get_uefi_secure_boot
+# Set whether or not UEFI secure boot is enabled:
+client.set_uefi_secure_boot(true)
+```
 
 #### Service Root
-TODO
+```ruby
+# Get the schema information with a given prefix:
+schema_prefix = 'Account'
+schema = client.get_schema(schema_prefix)
+# Get the registry information witha  given prefix:
+registry_prefix = 'Base'
+registry = client.get_registry(registry_prefix)
+```
 
 #### SNMP
-TODO
+```ruby
+# Get the SNMP mode:
+snmp_mode = client.get_snmp_mode
+# Get whether or not SNMP Alerts are enabled:
+snmp_alerts_enabled = client.get_snmp_alerts_enabled
+# Set the SNMP mode and whether or not SNMP Alerts are enabled:
+snmp_mode = 'Agentless'
+snmp_alerts_enabled = true
+client.set_snmp(snmp_mode, snmp_alerts_enabled)
+```
 
 #### Virtual Media
-TODO
+```ruby
+# Get the virtual media information:
+virtual_media = client.get_virtual_media
+# Get whether or not virtual media is inserted for a certain id:
+id = 1
+virtual_media_inserted = client.virtual_media_inserted?(id)
+# Insert virtual media at a certain id:
+image = 'http://10.254.224.38:5000/ubuntu-15.04-desktop-amd64.iso'
+client.insert_virtual_media(id, image)
+# Eject virtual media at a certain id:
+client.eject_virtual_media(id)
+```
 
 ## Custom requests
 In most cases, interacting with the client object is enough, but sometimes you need to make your own custom requests to the iLO.
