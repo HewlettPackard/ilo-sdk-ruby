@@ -20,8 +20,8 @@ TODO: Description
 
 
 ## Client
-Everything you do with this API happens through a client object.
-Creating the client object is the first step; then you can perform actions on the client.
+Everything you do with this API happens through a client object.  
+Creating the client object is the first step; then you can perform actions on the client.  
 
 ```ruby
 require 'ilo-sdk'
