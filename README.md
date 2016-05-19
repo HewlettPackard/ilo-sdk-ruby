@@ -99,6 +99,14 @@ bios_service_settings = client.get_bios_service
 service_name = 'my_name'
 service_email = 'my_name@hpe.com'
 client.set_bios_service(service_name, service_email)
+```
+
+#### Boot Settings
+```ruby
+# Get boot order base configuration:
+baseconfig = client.get_boot_baseconfig
+# Revert the boot:
+client.revert_boot
 # Get boot order:
 boot_order = client.get_boot_order
 # Set boot order:
