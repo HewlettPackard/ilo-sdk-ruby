@@ -134,17 +134,6 @@ module ILO_SDK
       true
     end
 
-    # Dump the boot order
-    # @raise [RuntimeError] if the request failed
-    # @return [Fixnum] current_boot_order
-    def get_all_boot_order
-      response = rest_get('/redfish/v1/systems/1/bios/Boot/')
-      boot = response_handler(response)
-      {
-        @host => boot['PersistentBootConfigOrder']
-      }
-    end
-
     # Get the boot order
     # @raise [RuntimeError] if the request failed
     # @return [Fixnum] current_boot_order
