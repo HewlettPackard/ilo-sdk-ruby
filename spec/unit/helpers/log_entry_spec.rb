@@ -36,7 +36,7 @@ RSpec.describe ILO_SDK::Client do
   describe '#get_logs' do
     it 'makes a GET rest call' do
       severity_level = 'OK'
-      duration = 100 #NOTE: may need to increase this for tests in the future.
+      duration = 1000 #NOTE: may need to increase this for tests in the future.
       log_type = 'IEL'
       body = {
         'Items' => [
