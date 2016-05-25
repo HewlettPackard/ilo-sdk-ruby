@@ -3,14 +3,14 @@ module ILO_SDK
   module Power_Helper
     # Get the Power State
     # @raise [RuntimeError] if the request failed
-    # @return [String] state
+    # @return [String] power_state
     def get_power_state
       response = rest_get('/redfish/v1/Systems/1/')
       response_handler(response)['PowerState']
     end
 
     # Set the Power State
-    # @param [String, Symbol] State
+    # @param [String, Symbol] state
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_power_state(state)

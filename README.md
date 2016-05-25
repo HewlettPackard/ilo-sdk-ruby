@@ -1,7 +1,7 @@
 # Ruby SDK for HPE iLO
 [![Gem Version](https://badge.fury.io/rb/ilo-sdk.svg)](https://badge.fury.io/rb/ilo-sdk)
 
-TODO: Description
+Software Development Kit for interacting with the Hewlett Packard Enterprise iLO (Integrated Lights-Out) server management technology.
 
 ## Installation
 
@@ -36,10 +36,6 @@ client = OneviewSDK::Client.new(
 ```
 
 :lock: Tip: Check the file permissions because the password is stored in clear-text.
-
-**Environment Variables**
-
-TODO
 
 ### Custom logging
 The default logger is a standard logger to STDOUT, but if you want to specify your own, you can.  However, your logger must implement the following methods:
@@ -297,12 +293,11 @@ First run `$ bundle` (requires the bundler gem), then...
 ### Testing
  - RuboCop: `$ rake rubocop`
  - Unit: `$ rake spec`
- - All: Run `$ rake test:all` to run RuboCop, unit, & integration tests.
 
 Note: run `$ rake -T` to get a list of all the available rake tasks.
 
 ## Authors
  - Anirudh Gupta
- - Bik Bajwa
+ - Bik Bajwa - [@bikbajwa](https://github.com/bikbajwa)
  - Jared Smartt - [@jsmartt](https://github.com/jsmartt)
  - Vivek Bhatia

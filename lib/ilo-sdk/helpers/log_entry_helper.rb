@@ -12,10 +12,10 @@ module ILO_SDK
       true
     end
 
-    # Check to see if the logs are empty
+    # Check to see if the specified logs are empty
     # @param [String, Symbol] log_type
     # @raise [RuntimeError] if the request failed
-    # @return true or false
+    # @return [TrueClass, FalseClass] logs_empty
     def logs_empty?(log_type)
       response = rest_get("/redfish/v1/Managers/1/LogServices/#{log_type}/Entries/")
       response_handler(response)['Items'].empty?
@@ -26,19 +26,19 @@ module ILO_SDK
     # @param [String, Symbol] duration
     # @param [String, Symbol] log_type
     # @raise [RuntimeError] if the request failed
-    # @return log_entries
+    # @return logs
     def get_logs(severity_level, duration, log_type)
       response = rest_get("/redfish/v1/Managers/1/LogServices/#{log_type}/Entries/")
       entries = response_handler(response)['Items']
-      log_entries = []
+      logs = []
       entries.each do |e|
         if severity_level.nil?
-          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
+          logs.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}") if Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
         elsif e['Severity'] == severity_level && Time.parse(e['Created']) > (Time.now.utc - (duration * 3600))
-          log_entries.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}")
+          logs.push("#{e['Severity']} | #{e['Message']} | #{e['Created']}")
         end
       end
-      log_entries
+      logs
     end
   end
 end
