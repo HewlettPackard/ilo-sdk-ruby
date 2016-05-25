@@ -14,7 +14,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#set_timeout' do
     it 'makes a PATCH rest call' do
-      new_action = {'SessionTimeoutMinutes' => 60}
+      new_action = { 'SessionTimeoutMinutes' => 60 }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/NetworkService/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_timeout(60)
       expect(ret_val).to eq(true)

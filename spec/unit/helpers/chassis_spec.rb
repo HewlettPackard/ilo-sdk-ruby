@@ -45,21 +45,19 @@ RSpec.describe ILO_SDK::Client do
       expect(@client).to receive(:rest_get).with('/redfish/v1/Chassis/PowerMetrics/').and_return(fake_response)
       power_metrics = @client.get_power_metrics
       expect(power_metrics).to eq(
-        {
-          @client.host => {
-            'PowerCapacityWatts' => '',
-            'PowerConsumedWatts' => '',
-            'PowerSupplies' => [
-              {
-                'LineInputVoltage' => '',
-                'LineInputVoltageType' => '',
-                'PowerCapacityWatts' => '',
-                'PowerSupplyType' => '',
-                'Health' => '',
-                'State' => ''
-              }
-            ]
-          }
+        @client.host => {
+          'PowerCapacityWatts' => '',
+          'PowerConsumedWatts' => '',
+          'PowerSupplies' => [
+            {
+              'LineInputVoltage' => '',
+              'LineInputVoltageType' => '',
+              'PowerCapacityWatts' => '',
+              'PowerSupplyType' => '',
+              'Health' => '',
+              'State' => ''
+            }
+          ]
         }
       )
     end
@@ -105,18 +103,16 @@ RSpec.describe ILO_SDK::Client do
       expect(@client).to receive(:rest_get).with('/redfish/v1/Chassis/ThermalMetrics/').and_return(fake_response)
       thermal_metrics = @client.get_thermal_metrics
       expect(thermal_metrics).to eq(
-        {
-          @client.host => [
-            {
-              'PhysicalContext' => '',
-              'Name' => '',
-              'CurrentReading' => '',
-              'CriticalThreshold' => '',
-              'Health' => '',
-              'State' => ''
-            }
-          ]
-        }
+        @client.host => [
+          {
+            'PhysicalContext' => '',
+            'Name' => '',
+            'CurrentReading' => '',
+            'CriticalThreshold' => '',
+            'Health' => '',
+            'State' => ''
+          }
+        ]
       )
     end
   end

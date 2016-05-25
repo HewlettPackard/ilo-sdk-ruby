@@ -53,8 +53,8 @@ RSpec.describe ILO_SDK::Client do
         'Oem' => {
           'Hp' => {
             'LoginName' => 'username'
-            }
           }
+        }
       }
       expect(@client).to receive(:rest_post).with('/redfish/v1/AccountService/Accounts/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.create_user('username', 'password')

@@ -14,7 +14,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#set_uefi_secure_boot' do
     it 'makes a PATCH rest call' do
-      new_action = {'SecureBootEnable' => true}
+      new_action = { 'SecureBootEnable' => true }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Systems/1/SecureBoot/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_uefi_secure_boot(true)
       expect(ret_val).to eq(true)
