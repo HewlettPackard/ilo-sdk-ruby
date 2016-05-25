@@ -36,26 +36,27 @@ RSpec.describe ILO_SDK::Client do
   describe '#get_logs' do
     it 'makes a GET rest call' do
       severity_level = 'OK'
-      duration = 1000 #NOTE: may need to increase this for tests in the future.
+      duration = 10 #NOTE: may need to increase this for tests in the future.
       log_type = 'IEL'
+      now = Time.now.utc
       body = {
         'Items' => [
           {
             'Severity' => 'OK',
             'Message' => 'First IEL Log',
-            'Created' => '2016-05-16T23:30:00Z'
+            'Created' => now
           },
           {
             'Severity' => 'OK',
             'Message' => 'Second IEL Log',
-            'Created' => '2016-05-16T23:30:00Z'
+            'Created' => now
           }
         ]
       }
       fake_response = FakeResponse.new(body)
       expect(@client).to receive(:rest_get).with("/redfish/v1/Managers/1/LogServices/#{log_type}/Entries/").and_return(fake_response)
       log_entries = @client.get_logs(severity_level, duration, log_type)
-      expect(log_entries).to eq(['OK | First IEL Log | 2016-05-16T23:30:00Z', 'OK | Second IEL Log | 2016-05-16T23:30:00Z'])
+      expect(log_entries).to eq(["OK | First IEL Log | #{now}", "OK | Second IEL Log | #{now}"])
     end
   end
 end
