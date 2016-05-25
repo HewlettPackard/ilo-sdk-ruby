@@ -44,19 +44,24 @@ RSpec.describe ILO_SDK::Client do
           {
             'Severity' => 'OK',
             'Message' => 'First IEL Log',
-            'Created' => now
+            'Created' => now - (duration * 3600) + 1 # Falls in time range
           },
           {
             'Severity' => 'OK',
             'Message' => 'Second IEL Log',
-            'Created' => now
+            'Created' => now - (duration * 3600) + 1
+          },
+          {
+            'Severity' => 'OK',
+            'Message' => 'Third IEL Log',
+            'Created' => now - (duration * 3600)
           }
         ]
       }
       fake_response = FakeResponse.new(body)
       expect(@client).to receive(:rest_get).with("/redfish/v1/Managers/1/LogServices/#{log_type}/Entries/").and_return(fake_response)
       log_entries = @client.get_logs(severity_level, duration, log_type)
-      expect(log_entries).to eq(["OK | First IEL Log | #{now}", "OK | Second IEL Log | #{now}"])
+      expect(log_entries).to eq(["OK | First IEL Log | #{now - (duration * 3600) + 1}", "OK | Second IEL Log | #{now - (duration * 3600) + 1}"])
     end
   end
 end
