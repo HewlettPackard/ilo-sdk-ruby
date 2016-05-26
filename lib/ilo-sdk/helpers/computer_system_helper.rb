@@ -22,14 +22,14 @@ module ILO_SDK
 
     # Get the UID indicator LED state
     # @raise [RuntimeError] if the request failed
-    # @return [String] state
+    # @return [String] indicator_led
     def get_indicator_led
       response = rest_get('/redfish/v1/Systems/1/')
       response_handler(response)['IndicatorLED']
     end
 
     # Set the UID indicator LED
-    # @param [String, Symbol] State
+    # @param [String, Symbol] state
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_indicator_led(state)

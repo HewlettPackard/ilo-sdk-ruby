@@ -22,20 +22,14 @@ RSpec.describe ILO_SDK::Client do
       body = {
         'Id' => '1',
         'Image' => '',
-        'MediaTypes' => [
-          'Floppy',
-          'USBStick'
-        ]
+        'MediaTypes' => %w(Floppy USBStick)
       }
       fake_response = FakeResponse.new(body)
       expect(@client).to receive(:rest_get).with('/redfish/v1/Managers/1/VirtualMedia/1/').and_return(fake_response)
       body = {
         'Id' => '2',
         'Image' => '',
-        'MediaTypes' => [
-          'CD',
-          'DVD'
-        ]
+        'MediaTypes' => %w(CD DVD)
       }
       fake_response = FakeResponse.new(body)
       expect(@client).to receive(:rest_get).with('/redfish/v1/Managers/1/VirtualMedia/2/').and_return(fake_response)
@@ -43,17 +37,11 @@ RSpec.describe ILO_SDK::Client do
       expect(media).to eq(
         '1' => {
           'Image' => '',
-          'MediaTypes' => [
-            'Floppy',
-            'USBStick'
-          ]
+          'MediaTypes' => %w(Floppy USBStick)
         },
         '2' => {
           'Image' => '',
-          'MediaTypes' => [
-            'CD',
-            'DVD'
-          ]
+          'MediaTypes' => %w(CD DVD)
         }
       )
     end

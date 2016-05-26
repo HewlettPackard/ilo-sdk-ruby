@@ -3,7 +3,7 @@ module ILO_SDK
   module Boot_Settings_Helper
     # Get the boot base config
     # @raise [RuntimeError] if the request failed
-    # @return [Fixnum] bios_baseconfig
+    # @return [Fixnum] boot_baseconfig
     def get_boot_baseconfig
       response = rest_get('/redfish/v1/Systems/1/bios/Boot/Settings/')
       response_handler(response)['BaseConfig']
@@ -21,7 +21,7 @@ module ILO_SDK
 
     # Get the boot order
     # @raise [RuntimeError] if the request failed
-    # @return [Fixnum] current_boot_order
+    # @return [Fixnum] boot_order
     def get_boot_order
       response = rest_get('/redfish/v1/systems/1/bios/Boot/Settings/')
       response_handler(response)['PersistentBootConfigOrder']

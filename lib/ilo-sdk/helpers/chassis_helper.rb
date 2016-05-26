@@ -1,10 +1,9 @@
 module ILO_SDK
   # Contains helper methods for Chassis actions
   module Chassis_Helper
-    # Get the vital power metrics
+    # Get the power metrics
     # @raise [RuntimeError] if the request failed
     # @return [Hash] power_metrics
-
     def get_power_metrics
       chassis = rest_get('/redfish/v1/Chassis/')
       chassis_uri = response_handler(chassis)['links']['Member'][0]['href']
@@ -32,6 +31,9 @@ module ILO_SDK
       }
     end
 
+    # Get the thermal metrics
+    # @raise [RuntimeError] if the request failed
+    # @return [Hash] thermal_metrics
     def get_thermal_metrics
       chassis = rest_get('/redfish/v1/Chassis/')
       chassis_uri = response_handler(chassis)['links']['Member'][0]['href']

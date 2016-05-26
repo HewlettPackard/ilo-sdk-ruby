@@ -3,7 +3,7 @@ module ILO_SDK
   module SNMP_Service_Helper
     # Get the SNMP Mode
     # @raise [RuntimeError] if the request failed
-    # @return [String] mode
+    # @return [String] snmp_mode
     def get_snmp_mode
       response = rest_get('/redfish/v1/Managers/1/SnmpService/')
       response_handler(response)['Mode']
@@ -11,14 +11,15 @@ module ILO_SDK
 
     # Get the SNMP Alerts Enabled value
     # @raise [RuntimeError] if the request failed
-    # @return [String] alerts_enabled
+    # @return [String] snmp_alerts_enabled
     def get_snmp_alerts_enabled
       response = rest_get('/redfish/v1/Managers/1/SnmpService/')
       response_handler(response)['AlertsEnabled']
     end
 
     # Set the SNMP Mode and Alerts Enabled value
-    # @param [String, Symbol] snmp_mode, snmp_alerts
+    # @param [String, Symbol] snmp_mode
+    # @param [Boolean] snmp_alerts
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_snmp(snmp_mode, snmp_alerts)

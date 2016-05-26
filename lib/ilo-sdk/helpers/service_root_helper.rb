@@ -22,7 +22,7 @@ module ILO_SDK
     # Get the Registry with given registry_prefix
     # @param [String, Symbol] registry_prefix
     # @raise [RuntimeError] if the request failed
-    # @return [String] info
+    # @return [String] registry
     def get_registry(registry_prefix)
       response = rest_get('/redfish/v1/Registries/')
       registries = response_handler(response)['Items']

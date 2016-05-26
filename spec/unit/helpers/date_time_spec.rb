@@ -86,7 +86,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#set_ntp_servers' do
     it 'makes a SET rest call' do
-      new_action = {'StaticNTPServers' => ''}
+      new_action = { 'StaticNTPServers' => '' }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/DateTime/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_ntp_servers('')
       expect(ret_val).to eq(true)

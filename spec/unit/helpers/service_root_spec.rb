@@ -37,7 +37,7 @@ RSpec.describe ILO_SDK::Client do
       fake_response = FakeResponse.new(body)
       expect(@client).to receive(:rest_get).with('/redfish/v1/SchemaStore/en/AccountService.json/').and_return(fake_response)
       schema = @client.get_schema('AccountService')
-      expect(schema).to eq(['title'=>'AccountService.1.0.0'])
+      expect(schema).to eq(['title' => 'AccountService.1.0.0'])
     end
   end
 

@@ -14,7 +14,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#revert_boot' do
     it 'makes a PATCH rest call' do
-      new_action = {'BaseConfig' => 'default'}
+      new_action = { 'BaseConfig' => 'default' }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/systems/1/bios/Boot/Settings/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.revert_boot
       expect(ret_val).to eq(true)
@@ -32,7 +32,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#set_boot_order' do
     it 'makes a PATCH rest call' do
-      new_action = {'PersistentBootConfigOrder' => 'PersistentBootConfigOrder'}
+      new_action = { 'PersistentBootConfigOrder' => 'PersistentBootConfigOrder' }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/systems/1/bios/Boot/Settings/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_boot_order('PersistentBootConfigOrder')
       expect(ret_val).to eq(true)
@@ -62,7 +62,7 @@ RSpec.describe ILO_SDK::Client do
       }
       body = {
         'Boot' => {
-          'BootSourceOverrideSupported' => ['1', '2', '3']
+          'BootSourceOverrideSupported' => %w(1 2 3)
         }
       }
       fake_response = FakeResponse.new(body)

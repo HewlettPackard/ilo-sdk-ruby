@@ -33,9 +33,9 @@ module ILO_SDK
     end
 
     # Set the UEFI shell start up
-    # @param [String, Symbol] value
-    # @param [String, Symbol] location
-    # @param [String, Symbol] url
+    # @param [String, Symbol] uefi_shell_startup
+    # @param [String, Symbol] uefi_shell_startup_location
+    # @param [String, Symbol] uefi_shell_startup_url
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_uefi_shell_startup(uefi_shell_startup, uefi_shell_startup_location, uefi_shell_startup_url)
@@ -51,7 +51,7 @@ module ILO_SDK
 
     # Get the BIOS DHCP
     # @raise [RuntimeError] if the request failed
-    # @return [String] uefi_bios_dhcp
+    # @return [String] bios_dhcp
     def get_bios_dhcp
       response = rest_get('/redfish/v1/Systems/1/bios/Settings/')
       bios = response_handler(response)
@@ -65,7 +65,7 @@ module ILO_SDK
       }
     end
 
-    # Set the UEFI shell start up
+    # Set the BIOS DHCP
     # @param [String, Symbol] dhcpv4
     # @param [String, Symbol] ipv4_address
     # @param [String, Symbol] ipv4_gateway
@@ -96,7 +96,7 @@ module ILO_SDK
       response_handler(response)['UrlBootFile']
     end
 
-    # Set the UEFI shell start up
+    # Set the URL boot file
     # @param [String, Symbol] url_boot_file
     # @raise [RuntimeError] if the request failed
     # @return true

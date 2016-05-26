@@ -1,6 +1,11 @@
 module ILO_SDK
   # Contains helper methods for Account Service actions
   module Account_Service_Helper
+    # Get the HREF for a user with a specific username
+    # @param [String, Symbol] uri
+    # @param [String, Symbol] username
+    # @raise [RuntimeError] if the request failed
+    # @return [String] userhref
     def userhref(uri, username)
       response = rest_get(uri)
       items = response_handler(response)['Items']

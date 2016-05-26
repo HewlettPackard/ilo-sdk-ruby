@@ -25,7 +25,7 @@ RSpec.describe ILO_SDK::Client do
     it 'makes a PATCH rest call' do
       mode = 'Agentless'
       alerts_enabled = true
-      new_action = {'Mode' => mode, 'AlertsEnabled' => alerts_enabled}
+      new_action = { 'Mode' => mode, 'AlertsEnabled' => alerts_enabled }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/SnmpService/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_snmp(mode, alerts_enabled)
       expect(ret_val).to eq(true)

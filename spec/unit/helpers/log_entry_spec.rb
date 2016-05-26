@@ -6,7 +6,7 @@ RSpec.describe ILO_SDK::Client do
   describe '#clear_logs' do
     it 'makes a POST rest call' do
       log_type = 'IEL'
-      new_action = {'Action' => 'ClearLog'}
+      new_action = { 'Action' => 'ClearLog' }
       expect(@client).to receive(:rest_post).with("/redfish/v1/Managers/1/LogServices/#{log_type}/", body: new_action).and_return(FakeResponse.new)
       ret_val = @client.clear_logs(log_type)
       expect(ret_val).to eq(true)
@@ -36,7 +36,7 @@ RSpec.describe ILO_SDK::Client do
   describe '#get_logs' do
     it 'makes a GET rest call' do
       severity_level = 'OK'
-      duration = 10 #NOTE: may need to increase this for tests in the future.
+      duration = 10
       log_type = 'IEL'
       now = Time.now.utc
       body = {

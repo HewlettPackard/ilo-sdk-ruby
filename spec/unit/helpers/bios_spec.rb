@@ -14,7 +14,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#revert_bios' do
     it 'makes a PATCH rest call' do
-      new_action = {'BaseConfig' => 'default'}
+      new_action = { 'BaseConfig' => 'default' }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/systems/1/bios/Settings/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.revert_bios
       expect(ret_val).to eq(true)
@@ -32,11 +32,9 @@ RSpec.describe ILO_SDK::Client do
       expect(@client).to receive(:rest_get).with('/redfish/v1/Systems/1/bios/Settings/').and_return(fake_response)
       uefi_shell_startup = @client.get_uefi_shell_startup
       expect(uefi_shell_startup).to eq(
-        {
-          'UefiShellStartup' => 'UefiShellStartup',
-          'UefiShellStartupLocation' => 'UefiShellStartupLocation',
-          'UefiShellStartupUrl' => 'UefiShellStartupUrl'
-        }
+        'UefiShellStartup' => 'UefiShellStartup',
+        'UefiShellStartupLocation' => 'UefiShellStartupLocation',
+        'UefiShellStartupUrl' => 'UefiShellStartupUrl'
       )
     end
   end
@@ -68,14 +66,12 @@ RSpec.describe ILO_SDK::Client do
       expect(@client).to receive(:rest_get).with('/redfish/v1/Systems/1/bios/Settings/').and_return(fake_response)
       bios_dhcp = @client.get_bios_dhcp
       expect(bios_dhcp).to eq(
-        {
-          'Dhcpv4' => 'Enabled',
-          'Ipv4Address' => '0.0.0.0',
-          'Ipv4Gateway' => '0.0.0.0',
-          'Ipv4PrimaryDNS' => '0.0.0.0',
-          'Ipv4SecondaryDNS' => '0.0.0.0',
-          'Ipv4SubnetMask' => '0.0.0.0'
-        }
+        'Dhcpv4' => 'Enabled',
+        'Ipv4Address' => '0.0.0.0',
+        'Ipv4Gateway' => '0.0.0.0',
+        'Ipv4PrimaryDNS' => '0.0.0.0',
+        'Ipv4SecondaryDNS' => '0.0.0.0',
+        'Ipv4SubnetMask' => '0.0.0.0'
       )
     end
   end
@@ -107,7 +103,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#set_url_boot_file' do
     it 'makes a PATCH rest call' do
-      new_action = {'UrlBootFile' => 'http://wwww.urlbootfiletest.iso'}
+      new_action = { 'UrlBootFile' => 'http://wwww.urlbootfiletest.iso' }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Systems/1/bios/Settings/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_url_boot_file('http://wwww.urlbootfiletest.iso')
       expect(ret_val).to eq(true)
@@ -124,10 +120,8 @@ RSpec.describe ILO_SDK::Client do
       expect(@client).to receive(:rest_get).with('/redfish/v1/Systems/1/bios/Settings/').and_return(fake_response)
       bios_service = @client.get_bios_service
       expect(bios_service).to eq(
-        {
-          'ServiceName' => 'John Doe',
-          'ServiceEmail' => 'john.doe@hpe.com'
-        }
+        'ServiceName' => 'John Doe',
+        'ServiceEmail' => 'john.doe@hpe.com'
       )
     end
   end

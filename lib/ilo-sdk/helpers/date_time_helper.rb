@@ -24,18 +24,18 @@ module ILO_SDK
 
     # Get whether or not ntp servers are being used
     # @raise [RuntimeError] if the request failed
-    # @return [TrueClass, FalseClass] value
+    # @return [TrueClass, FalseClass] use_ntp
     def get_ntp
       response = rest_get('/redfish/v1/Managers/1/EthernetInterfaces/1/')
       response_handler(response)['Oem']['Hp']['DHCPv4']['UseNTPServers']
     end
 
     # Set whether or not ntp servers are being used
-    # @param [TrueClass, FalseClass] value
+    # @param [TrueClass, FalseClass] use_ntp
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_ntp(value)
-      new_action = { 'Oem' => { 'Hp' => { 'DHCPv4' => { 'UseNTPServers' => value } } } }
+    def set_ntp(use_ntp)
+      new_action = { 'Oem' => { 'Hp' => { 'DHCPv4' => { 'UseNTPServers' => use_ntp } } } }
       response = rest_patch('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: new_action)
       response_handler(response)
       true
