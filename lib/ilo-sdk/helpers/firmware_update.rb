@@ -13,8 +13,8 @@ module ILO_SDK
     # @param [String, Symbol] uri
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_fw_upgrade(uri)
-      new_action = { 'Action' => 'InstallFromURI', 'FirmwareURI' => uri }
+    def set_fw_upgrade(uri, tpm_override_flag = true)
+      new_action = { 'Action' => 'InstallFromURI', 'FirmwareURI' => uri, 'TPMOverrideFlag' => tpm_override_flag }
       response = rest_post('/redfish/v1/Managers/1/UpdateService/', body: new_action)
       response_handler(response)
       true
