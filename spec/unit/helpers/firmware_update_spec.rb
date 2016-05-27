@@ -25,7 +25,8 @@ RSpec.describe ILO_SDK::Client do
     it 'makes a POST rest call' do
       new_action = {
         'Action' => 'InstallFromURI',
-        'FirmwareURI' => 'www.testuri.com'
+        'FirmwareURI' => 'www.testuri.com',
+        'TPMOverrideFlag' => true
       }
       expect(@client).to receive(:rest_post).with('/redfish/v1/Managers/1/UpdateService/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_fw_upgrade('www.testuri.com')
