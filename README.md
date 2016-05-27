@@ -56,10 +56,13 @@ Actions are performed on the client, and defined in the [helper modules](lib/ilo
 ```ruby
 # Get list of users:
 users = client.get_users
+
 # Create a user:
 client.create_user('user1', 'password123')
+
 # Change a user's password:
 client.change_password('user1', 'newpassword123')
+
 # Delete a user:
 client.delete_user('user1')
 ```
@@ -68,16 +71,21 @@ client.delete_user('user1')
 ```ruby
 # Get BIOS base configuration:
 baseconfig = client.get_bios_baseconfig
+
 # Revert BIOS:
 client.revert_bios
+
 # Get UEFI shell startup settings:
 uefi_shell_startup = client.get_uefi_shell_startup
+
 # Set UEFI shell startup settings:
 uefi_shell_startup_location = 'Auto'
 uefi_shell_startup_url = 'http://wwww.uefi.com'
 client.uefi_shell_startup('Enabled', uefi_shell_startup_location, uefi_shell_startup_url)
+
 # Get BIOS DHCP settings:
 bios_dhcp = client.get_bios_dhcp
+
 # Set BIOS DHCP settings:
 ipv4_address = '10.1.1.111'
 ipv4_gateway = '10.1.1.0'
@@ -85,12 +93,16 @@ ipv4_primary_dns = '10.1.1.1'
 ipv4_secondary_dns = '10.1.1.2'
 ipv4_subnet_mark = '255.255.255.0'
 client.set_bios_dhcp('Disabled', ipv4_address, ipv4_gateway, ipv4_primary_dns, ipv4_secondary_dns, ipv4_subnet_mark)
+
 # Get the URL boot file:
 url_boot_file = client.get_url_boot_file
+
 # Set the URL boot file:
 client.set_url_boot_file('http://www.urlbootfile.iso')
+
 # Get BIOS service settings:
 bios_service_settings = client.get_bios_service
+
 # Set BIOS service settings:
 service_name = 'my_name'
 service_email = 'my_name@hpe.com'
@@ -101,10 +113,13 @@ client.set_bios_service(service_name, service_email)
 ```ruby
 # Get boot order base configuration:
 baseconfig = client.get_boot_baseconfig
+
 # Revert the boot:
 client.revert_boot
+
 # Get boot order:
 boot_order = client.get_boot_order
+
 # Set boot order:
 client.set_boot_order([
     "Generic.USB.1.1",
@@ -115,8 +130,10 @@ client.set_boot_order([
     "HD.Emb.5.1",
     "NIC.Slot.1.1.IPv4"
 ])
+
 # Get temporary boot order:
 temporary_boot_order = client.get_temporary_boot_order
+
 # Set temporary boot order:
 boot_source_override_target = 'CD'
 client.set_temporary_boot_order(boot_source_override_target)
@@ -126,6 +143,7 @@ client.set_temporary_boot_order(boot_source_override_target)
 ```ruby
 # Get power metrics information:
 power_metrics = client.get_power_metrics
+
 # Get thermal metrics information:
 thermal_metrics = client.get_thermal_metrics
 ```
@@ -134,10 +152,13 @@ thermal_metrics = client.get_thermal_metrics
 ```ruby
 # Get computer details (including general, network, and array controller details):
 computer_details = client.get_computer_details
+
 # Get general computer details:
 general_details = client.get_general_computer_details
+
 # Get computer network details:
 network_details = client.get_computer_network_details
+
 # Get array controller details:
 array_controller_details = client.get_array_controller_details
 ```
@@ -146,10 +167,13 @@ array_controller_details = client.get_array_controller_details
 ```ruby
 # Get the computer system asset tag:
 asset_tag = client.get_asset_tag
+
 # Set the computer system asset tag:
 client.set_asset_tag('HP001')
+
 # Get the indicator led state:
 indicator_led = client.get_indicator_led
+
 # Set the indicator led state:
 client.set_indicator_led('Lit')
 ```
@@ -158,14 +182,19 @@ client.set_indicator_led('Lit')
 ```ruby
 # Get the time zone:
 time_zone = client.get_time_zone
+
 # Set the time zone:
 client.set_time_zone('Africa/Abidjan')
+
 # Get whether or not NTP servers are in use (true or false):
 ntp_server_use = client.get_ntp
+
 # Set whether or not to use NTP servers:
 client.set_ntp(true)
+
 # Get a list of NTP servers:
 ntp_servers = client.get_ntp_servers
+
 # Set the NTP servers:
 ntp_servers = ['10.1.1.1', '10.1.1.2']
 client.set_ntp_server(ntp_servers)
@@ -175,6 +204,7 @@ client.set_ntp_server(ntp_servers)
 ```ruby
 # Get the firmware version:
 fw_version = client.get_fw_version
+
 # Set the firmware URI for a firmware upgrade:
 client.set_fw_upgrade('www.firmwareupgrade.com')
 ```
@@ -184,8 +214,10 @@ client.set_fw_upgrade('www.firmwareupgrade.com')
 # Clear a specific type of logs:
 log_type = 'IEL'
 client.clear_logs(log_type)
+
 # Check to see if a specific type of logs are empty:
 empty = client.logs_empty?(log_type)
+
 # Get a specific type of logs based on severity level and duration:
 severity_level = 'OK'
 duration = 10 # hours
@@ -196,6 +228,7 @@ logs = client.get_log(severity_level, duration, log_type)
 ```ruby
 # Get the minutes until session timeout:
 timeout = client.get_timeout
+
 # Set the minutes until session timeout:
 client.set_timeout(60)
 ```
@@ -204,8 +237,10 @@ client.set_timeout(60)
 ```ruby
 # Get the power state of the system:
 power_state = client.get_power_state
+
 # Set the power state of the system:
 client.set_power_state('On')
+
 # Reset the iLO:
 client.reset_ilo
 ```
@@ -214,6 +249,7 @@ client.reset_ilo
 ```ruby
 # Get whether or not UEFI secure boot is enabled:
 uefi_secure_boot = client.get_uefi_secure_boot
+
 # Set whether or not UEFI secure boot is enabled:
 client.set_uefi_secure_boot(true)
 ```
@@ -223,7 +259,8 @@ client.set_uefi_secure_boot(true)
 # Get the schema information with a given prefix:
 schema_prefix = 'Account'
 schema = client.get_schema(schema_prefix)
-# Get the registry information witha  given prefix:
+
+# Get the registry information with a  given prefix:
 registry_prefix = 'Base'
 registry = client.get_registry(registry_prefix)
 ```
@@ -232,8 +269,10 @@ registry = client.get_registry(registry_prefix)
 ```ruby
 # Get the SNMP mode:
 snmp_mode = client.get_snmp_mode
+
 # Get whether or not SNMP Alerts are enabled:
 snmp_alerts_enabled = client.get_snmp_alerts_enabled
+
 # Set the SNMP mode and whether or not SNMP Alerts are enabled:
 snmp_mode = 'Agentless'
 snmp_alerts_enabled = true
@@ -244,12 +283,15 @@ client.set_snmp(snmp_mode, snmp_alerts_enabled)
 ```ruby
 # Get the virtual media information:
 virtual_media = client.get_virtual_media
+
 # Get whether or not virtual media is inserted for a certain id:
 id = 1
 virtual_media_inserted = client.virtual_media_inserted?(id)
+
 # Insert virtual media at a certain id:
 image = 'http://10.254.224.38:5000/ubuntu-15.04-desktop-amd64.iso'
 client.insert_virtual_media(id, image)
+
 # Eject virtual media at a certain id:
 client.eject_virtual_media(id)
 ```
