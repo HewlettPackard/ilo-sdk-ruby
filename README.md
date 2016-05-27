@@ -25,7 +25,7 @@ Creating the client object is the first step; then you can perform actions on th
 
 ```ruby
 require 'ilo-sdk'
-client = OneviewSDK::Client.new(
+client = ILO_SDK::Client.new(
   host: 'https://ilo.example.com',
   user: 'Administrator',              # This is the default
   password: 'secret123',
