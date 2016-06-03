@@ -335,6 +335,7 @@ First run `$ bundle` (requires the bundler gem), then...
 ### Testing
  - RuboCop: `$ rake rubocop`
  - Unit: `$ rake spec`
+ - All test: `$ rake test`
 
 Note: run `$ rake -T` to get a list of all the available rake tasks.
 
