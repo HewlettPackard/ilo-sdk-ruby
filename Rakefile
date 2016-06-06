@@ -15,3 +15,9 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
 end
 
 RuboCop::RakeTask.new
+
+desc 'Runs rubocop and unit tests'
+task :test do
+  Rake::Task[:rubocop].invoke
+  Rake::Task[:spec].invoke
+end
