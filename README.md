@@ -31,7 +31,7 @@ client = ILO_SDK::Client.new(
   password: 'secret123',
   ssl_enabled: true,                  # This is the default and strongly encouraged
   logger: Logger.new(STDOUT),         # This is the default
-  log_level: :info,                   # This is the default
+  log_level: :info                   # This is the default
 )
 ```
 
