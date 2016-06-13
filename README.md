@@ -320,9 +320,11 @@ This project is licensed under the Apache 2.0 license. Please see [LICENSE](LICE
 
 ## Contributing and feature requests
 **Contributing:** You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
-We are passionate about improving this project, and glad to accept help to make it better.
+We are passionate about improving this project, and glad to accept help to make it better. However, keep the following in mind:
 
-NOTE: We reserve the right to reject changes that we feel do not fit the scope of this project, so for feature additions, please open an issue to discuss your ideas before doing the work.
+ - You must sign a Contributor License Agreement first. Contact one of the authors (from Hewlett Packard Enterprise) for details and the CLA.
+ - All pull requests must contain complete test code also. See the testing section below.
+ - We reserve the right to reject changes that we feel do not fit the scope of this project, so for feature additions, please open an issue to discuss your ideas before doing the work.
 
 **Feature Requests:** If you have a need that is not met by the current implementation, please let us know (via a new issue).
 This feedback is crucial for us to deliver a useful product. Do not assume we have already thought of everything, because we assure you that is not the case.
@@ -340,7 +342,7 @@ First run `$ bundle` (requires the bundler gem), then...
 Note: run `$ rake -T` to get a list of all the available rake tasks.
 
 ## Authors
- - Anirudh Gupta
+ - Anirudh Gupta - [@Anirudh-Gupta](https://github.com/Anirudh-Gupta)
  - Bik Bajwa - [@bikbajwa](https://github.com/bikbajwa)
  - Jared Smartt - [@jsmartt](https://github.com/jsmartt)
  - Vivek Bhatia - [@vivekbhatia14] (https://github.com/vivekbhatia14)
