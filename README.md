@@ -343,4 +343,4 @@ Note: run `$ rake -T` to get a list of all the available rake tasks.
  - Anirudh Gupta
  - Bik Bajwa - [@bikbajwa](https://github.com/bikbajwa)
  - Jared Smartt - [@jsmartt](https://github.com/jsmartt)
- - Vivek Bhatia
+ - Vivek Bhatia - [@vivekbhatia14] (https://github.com/vivekbhatia14)
