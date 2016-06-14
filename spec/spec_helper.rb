@@ -8,7 +8,7 @@ SimpleCov.start do
   add_filter 'spec/'
   add_group 'Client', client_files
   add_group 'Helpers', helper_path
-  minimum_coverage 40 # TODO: bump up as we increase coverage. Goal: 95%
+  minimum_coverage 87 # TODO: bump up as we increase coverage. Goal: 95%
   minimum_coverage_by_file 10 # TODO: bump up as we increase coverage. Goal: 90%
 end
 
