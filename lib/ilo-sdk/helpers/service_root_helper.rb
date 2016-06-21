@@ -15,7 +15,7 @@ module ILO_SDK
     # Get the schema information with given prefix
     # @param [String, Symbol] schema_prefix
     # @raise [RuntimeError] if the request failed
-    # @return [String] schema
+    # @return [Array] schema
     def get_schema(schema_prefix)
       response = rest_get('/redfish/v1/Schemas/')
       schemas = response_handler(response)['Items']
@@ -33,7 +33,7 @@ module ILO_SDK
     # Get the Registry with given registry_prefix
     # @param [String, Symbol] registry_prefix
     # @raise [RuntimeError] if the request failed
-    # @return [String] registry
+    # @return [Array] registry
     def get_registry(registry_prefix)
       response = rest_get('/redfish/v1/Registries/')
       registries = response_handler(response)['Items']
