@@ -209,6 +209,22 @@ fw_version = client.get_fw_version
 client.set_fw_upgrade('www.firmwareupgrade.com')
 ```
 
+#### HTTPS Certificate
+```ruby
+# Generate a Certificate Signing Request:
+client.generate_csr('US', 'Texas', 'Houston', 'HPE', 'myUnit', 'example.net')
+
+# Sleep for 10 minutes to wait for the CSR to generate and then get the CSR:
+sleep(10.minutes)
+csr = client.get_csr
+
+# Import an SSL Certificate:
+cert = '-----BEGIN CERTIFICATE-----
+contentOfYourCertificate
+-----END CERTIFICATE-----'
+client.import_certificate(cert)
+```
+
 #### Log Entry
 ```ruby
 # Clear a specific type of logs:
