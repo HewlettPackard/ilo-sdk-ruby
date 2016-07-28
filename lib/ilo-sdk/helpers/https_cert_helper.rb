@@ -12,6 +12,10 @@
 module ILO_SDK
   # Contains helper methods for HTTPS Certificates
   module HttpsCertHelper
+
+    # Get the SSL Certificate
+    # @raise [RuntimeError] if the request failed
+    # @return [String] x509_certificate
     def get_certificate
       uri = URI.parse(URI.escape(@host))
       options = { use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE }
@@ -21,6 +25,10 @@ module ILO_SDK
       x509.to_text
     end
 
+    # Import the x509 certificate
+    # @param [String] certificate
+    # @raise [RuntimeError] if the request failed
+    # @return true
     def import_certificate(certificate)
       new_action = {
         'Action' => 'ImportCertificate',
@@ -31,6 +39,15 @@ module ILO_SDK
       true
     end
 
+    # Generate a Certificate Signing Request
+    # @param [String] country
+    # @param [String] state
+    # @param [String] city
+    # @param [String] orgName
+    # @param [String] orgUnit
+    # @param [String] commonName
+    # @raise [RuntimeError] if the request failed
+    # @return true
     def generate_csr(country, state, city, orgName, orgUnit, commonName)
       new_action = {
         'Action' => 'GenerateCSR',
@@ -43,6 +60,15 @@ module ILO_SDK
       }
       response = rest_post('/redfish/v1/Managers/1/SecurityService/HttpsCert/', body: new_action)
       response_handler(response)
+      true
+    end
+
+    # Get the Certificate Signing Request
+    # @raise [RuntimeError] if the request failed
+    # @return [String] certificate_signing_request
+    def get_csr
+      response = rest_get('/redfish/v1/Managers/1/SecurityService/HttpsCert/')
+      response_handler(response)['CertificateSigningRequest']
     end
   end
 end
