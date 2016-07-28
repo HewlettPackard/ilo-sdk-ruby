@@ -12,17 +12,15 @@
 module ILO_SDK
   # Contains helper methods for HTTPS Certificates
   module HttpsCertHelper
-
     # Get the SSL Certificate
     # @raise [RuntimeError] if the request failed
     # @return [String] x509_certificate
     def get_certificate
       uri = URI.parse(URI.escape(@host))
       options = { use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE }
-      x509 = Net::HTTP.start(uri.host, uri.port, options) do |http|
-        http.peer_cert
+      Net::HTTP.start(uri.host, uri.port, options) do |http|
+        http.peer_cert.to_pem
       end
-      x509.to_text
     end
 
     # Import the x509 certificate
@@ -48,15 +46,15 @@ module ILO_SDK
     # @param [String] commonName
     # @raise [RuntimeError] if the request failed
     # @return true
-    def generate_csr(country, state, city, orgName, orgUnit, commonName)
+    def generate_csr(country, state, city, org_name, org_unit, common_name)
       new_action = {
         'Action' => 'GenerateCSR',
         'Country' => country,
         'State' => state,
         'City' => city,
-        'OrgName' => orgName,
-        'OrgUnit' => orgUnit,
-        'CommonName' => commonName
+        'OrgName' => org_name,
+        'OrgUnit' => org_unit,
+        'CommonName' => common_name
       }
       response = rest_post('/redfish/v1/Managers/1/SecurityService/HttpsCert/', body: new_action)
       response_handler(response)

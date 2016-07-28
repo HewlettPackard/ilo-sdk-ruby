@@ -3,17 +3,11 @@ require_relative './../../spec_helper'
 RSpec.describe ILO_SDK::Client do
   include_context 'shared context'
 
-  # def get_certificate
-  #   uri = URI.parse(URI.escape(@host))
-  #   options = { use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE }
-  #   x509 = Net::HTTP.start(uri.host, uri.port, options) do |http|
-  #     http.peer_cert
-  #   end
-  #   x509.to_text
-  # end
   describe '#get_certificate' do
     it 'it makes an HTTP call' do
-      #expect(URI).to receive(:parse).with(URI.escape(@client.host))
+      allow(Net::HTTP).to receive(:start) { 'fake_cert' }
+      ret_val = @client.get_certificate
+      expect(ret_val).to eq('fake_cert')
     end
   end
 
@@ -51,16 +45,16 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#get_csr' do
     it 'makes a GET rest call' do
-      certificateSigningRequest = '-----BEGIN CERTIFICATE REQUEST-----
+      certificate_signing_request = '-----BEGIN CERTIFICATE REQUEST-----
       MIIDJzCCAg8CAQAwgZAxJDAiBgNVBAMMG0lMTzEyMy5hbWVyaWNhcy5ocHFjb3Jw
       -----END CERTIFICATE REQUEST-----'
       body = {
-        'CertificateSigningRequest' => certificateSigningRequest
+        'CertificateSigningRequest' => certificate_signing_request
       }
       fake_response = FakeResponse.new(body)
       expect(@client).to receive(:rest_get).with('/redfish/v1/Managers/1/SecurityService/HttpsCert/').and_return(fake_response)
       csr = @client.get_csr
-      expect(csr).to eq(certificateSigningRequest)
+      expect(csr).to eq(certificate_signing_request)
     end
   end
 end
