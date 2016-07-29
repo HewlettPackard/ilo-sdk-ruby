@@ -14,14 +14,16 @@ module ILO_SDK
   module HttpsCertHelper
     # Get the SSL Certificate
     # @raise [RuntimeError] if the request failed
-    # @return [String] x509_certificate
+    # @return [OpenSSL::X509::Certificate] x509_certificate
+    # rubocop:disable Style/SymbolProc
     def get_certificate
       uri = URI.parse(URI.escape(@host))
       options = { use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE }
       Net::HTTP.start(uri.host, uri.port, options) do |http|
-        http.peer_cert.to_pem
+        http.peer_cert
       end
     end
+    # rubocop:enable Style/SymbolProc
 
     # Import the x509 certificate
     # @param [String] certificate
