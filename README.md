@@ -212,16 +212,24 @@ client.set_fw_upgrade('www.firmwareupgrade.com')
 #### HTTPS Certificate
 ```ruby
 # Generate a Certificate Signing Request:
-client.generate_csr('US', 'Texas', 'Houston', 'HPE', 'myUnit', 'example.net')
+# Params: country_code, state, city, organization, organizational_unit, common_name
+client.generate_csr('US', 'Texas', 'Houston', 'myCompany', 'myUnit', 'example.com')
 
-# Sleep for 10 minutes to wait for the CSR to generate and then get the CSR:
-sleep(10.minutes)
-csr = client.get_csr
+# Wait for the CSR to be generated (will take about 10 minutes):
+csr = nil
+while(csr.nil?) do
+  sleep(60) # 60 seconds
+  csr = client.get_csr
+end
 
-# Import an SSL Certificate:
-cert = '-----BEGIN CERTIFICATE-----
-contentOfYourCertificate
------END CERTIFICATE-----'
+# Here you'll need to have a step that submits the csr to a certificate authority
+# (or self-signs it) and gets back the signed certificate. It will look something like:
+# -----BEGIN CERTIFICATE-----
+# lines_of_secret_text
+# -----END CERTIFICATE-----
+# For this example, we're assuming we've read in the content of the certificate to the
+# "cert" variable (as a string).
+
 client.import_certificate(cert)
 ```
 
