@@ -63,5 +63,6 @@ module ILO_SDK
     include ComputerSystemHelper
     include ChassisHelper
     include ServiceRootHelper
+    include HttpsCertHelper
   end
 end
