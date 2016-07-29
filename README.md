@@ -211,26 +211,32 @@ client.set_fw_upgrade('www.firmwareupgrade.com')
 
 #### HTTPS Certificate
 ```ruby
-# Generate a Certificate Signing Request:
-# Params: country_code, state, city, organization, organizational_unit, common_name
-client.generate_csr('US', 'Texas', 'Houston', 'myCompany', 'myUnit', 'example.com')
+# Get the current SSL Certificate and check to see if expires within 24 hours
+expiration = client.get_certificate.not_after.to_datetime
+tomorrow = DateTime.now + 1
 
-# Wait for the CSR to be generated (will take about 10 minutes):
-csr = nil
-while(csr.nil?) do
-  sleep(60) # 60 seconds
-  csr = client.get_csr
+if expiration < tomorrow
+  # Generate a Certificate Signing Request:
+  # Params: country_code, state, city, organization, organizational_unit, common_name
+  client.generate_csr('US', 'Texas', 'Houston', 'myCompany', 'myUnit', 'example.com')
+
+  # Wait for the CSR to be generated (will take about 10 minutes):
+  csr = nil
+  while(csr.nil?) do
+    sleep(60) # 60 seconds
+    csr = client.get_csr
+  end
+
+  # Here you'll need to have a step that submits the csr to a certificate authority
+  # (or self-signs it) and gets back the signed certificate. It will look something like:
+  # -----BEGIN CERTIFICATE-----
+  # lines_of_secret_text
+  # -----END CERTIFICATE-----
+  # For this example, we're assuming we've read in the content of the certificate to the
+  # "cert" variable (as a string).
+
+  client.import_certificate(cert)
 end
-
-# Here you'll need to have a step that submits the csr to a certificate authority
-# (or self-signs it) and gets back the signed certificate. It will look something like:
-# -----BEGIN CERTIFICATE-----
-# lines_of_secret_text
-# -----END CERTIFICATE-----
-# For this example, we're assuming we've read in the content of the certificate to the
-# "cert" variable (as a string).
-
-client.import_certificate(cert)
 ```
 
 #### Log Entry
