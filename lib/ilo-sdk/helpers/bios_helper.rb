@@ -32,7 +32,7 @@ module ILO_SDK
 
     # Get the UEFI shell start up
     # @raise [RuntimeError] if the request failed
-    # @return [String] uefi_shell_startup
+    # @return [Hash] uefi_shell_startup
     def get_uefi_shell_startup
       response = rest_get('/redfish/v1/Systems/1/bios/Settings/')
       bios = response_handler(response)
