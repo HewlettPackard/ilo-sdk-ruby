@@ -55,6 +55,7 @@ module ILO_SDK
     include PowerHelper
     include AccountServiceHelper
     include LogEntryHelper
+    include ManagerAccountHelper
     include SecureBootHelper
     include BiosHelper
     include BootSettingsHelper
