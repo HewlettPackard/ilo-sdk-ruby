@@ -42,7 +42,7 @@ RSpec.describe ILO_SDK::Client do
         ]
       }
       fake_response = FakeResponse.new(body)
-      expect(@client).to receive(:rest_get).with('/redfish/v1/AccountService/').and_return(fake_response)
+      expect(@client).to receive(:rest_get).with('/redfish/v1/AccountService/Accounts/').and_return(fake_response)
       privileges = @client.get_account_privileges('test1')
       expect(privileges).to eq(body['Items'][0]['Oem']['Hp']['Privileges'])
     end
@@ -87,7 +87,7 @@ RSpec.describe ILO_SDK::Client do
         ]
       }
       fake_response = FakeResponse.new(body)
-      expect(@client).to receive(:rest_get).with('/redfish/v1/AccountService/').and_return(fake_response)
+      expect(@client).to receive(:rest_get).with('/redfish/v1/AccountService/Accounts/').and_return(fake_response)
       username = 'test1'
       login = false
       remote_console = false
@@ -109,7 +109,7 @@ RSpec.describe ILO_SDK::Client do
           }
         }
       }
-      expect(@client).to receive(:rest_patch).with('/redfish/v1/AccountService/1/', body: new_action).and_return(FakeResponse.new)
+      expect(@client).to receive(:rest_patch).with('/redfish/v1/AccountService/Accounts/1/', body: new_action).and_return(FakeResponse.new)
       ret_val = @client.set_account_privileges(username, login, remote_console, user_config, virtual_media, virtual_power_and_reset, ilo_config)
       expect(ret_val).to eq(true)
     end

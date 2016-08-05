@@ -17,7 +17,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return [Hash] privileges
     def get_account_privileges(username)
-      response = rest_get("/redfish/v1/AccountService/")
+      response = rest_get('/redfish/v1/AccountService/Accounts/')
       accounts = response_handler(response)['Items']
       accounts.each do |account|
         if account['Oem']['Hp']['LoginName'] == username
@@ -37,7 +37,7 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_account_privileges(username, login, remote_console, user_config, virtual_media, virtual_power_and_reset, ilo_config)
-      response = rest_get('/redfish/v1/AccountService/')
+      response = rest_get('/redfish/v1/AccountService/Accounts/')
       accounts = response_handler(response)['Items']
       id = '0'
       accounts.each do |account|
@@ -60,7 +60,7 @@ module ILO_SDK
           }
         }
       }
-      reponse = rest_patch("/redfish/v1/AccountService/#{id}/", body: new_action)
+      response = rest_patch("/redfish/v1/AccountService/Accounts/#{id}/", body: new_action)
       response_handler(response)
       true
     end

@@ -10,7 +10,7 @@ Metrics/ModuleLength:
   Max: 150
 
 Metrics/ParameterLists:
-  Max: 6
+  Max: 8
 
 Style/FileName:
   Exclude:
