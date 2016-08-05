@@ -16,7 +16,7 @@ module ILO_SDK
     # @param [String, Symbol] username
     # @raise [RuntimeError] if the request failed
     # @return [Hash] privileges
-    def get_privileges(username)
+    def get_account_privileges(username)
       response = rest_get("/redfish/v1/AccountService/")
       accounts = response_handler(response)['Items']
       accounts.each do |account|
@@ -36,7 +36,7 @@ module ILO_SDK
     # @param [TrueClass, FalseClass] ilo_config
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_privileges(username, login, remote_console, user_config, virtual_media, virtual_power_and_reset, ilo_config)
+    def set_account_privileges(username, login, remote_console, user_config, virtual_media, virtual_power_and_reset, ilo_config)
       response = rest_get('/redfish/v1/AccountService/')
       accounts = response_handler(response)['Items']
       id = '0'

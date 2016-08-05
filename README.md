@@ -254,6 +254,24 @@ duration = 10 # hours
 logs = client.get_log(severity_level, duration, log_type)
 ```
 
+### Manager Account
+```ruby
+# Get the Account Privileges for a specific user:
+username = 'Administrator'
+client.get_account_privileges(username)
+
+# Set the Account Privileges for a specific user:
+login = true
+remote_console = false
+user_config = true
+virtual_media = false
+virtual_power_and_reset = true
+ilo_config = false
+
+client.set_account_privileges(username, login, remote_console, user_config, virtual_media,
+  virtual_power_and_reset, ilo_config)
+```
+
 #### Manager Network Protocol
 ```ruby
 # Get the minutes until session timeout:
