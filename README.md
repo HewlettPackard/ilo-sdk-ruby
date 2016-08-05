@@ -260,16 +260,19 @@ logs = client.get_log(severity_level, duration, log_type)
 username = 'Administrator'
 client.get_account_privileges(username)
 
-# Set the Account Privileges for a specific user:
-login = true
-remote_console = false
-user_config = true
-virtual_media = false
-virtual_power_and_reset = true
-ilo_config = false
+# Set the Login Privilege to true for a specific user:
+client.set_account_privileges(username, LoginPriv: true)
 
-client.set_account_privileges(username, login, remote_console, user_config, virtual_media,
-  virtual_power_and_reset, ilo_config)
+# Set all of the Account Privileges for a specific user:
+privileges = {
+  'LoginPriv' => true,
+  'RemoteConsolePriv' => true,
+  'UserConfigPriv' => true,
+  'VirtualMediaPriv' => true,
+  'VirtualPowerAndResetPriv' => true,
+  'iLOConfigPriv' => true
+}
+client.set_account_privileges(username, privileges)
 ```
 
 #### Manager Network Protocol

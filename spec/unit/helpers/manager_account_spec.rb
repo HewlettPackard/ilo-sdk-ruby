@@ -89,28 +89,80 @@ RSpec.describe ILO_SDK::Client do
       fake_response = FakeResponse.new(body)
       expect(@client).to receive(:rest_get).with('/redfish/v1/AccountService/Accounts/').and_return(fake_response)
       username = 'test1'
-      login = false
-      remote_console = false
-      user_config = false
-      virtual_media = false
-      virtual_power_and_reset = false
-      ilo_config = false
+      privileges = {
+        'LoginPriv' => false,
+        'RemoteConsolePriv' => false,
+        'UserConfigPriv' => false,
+        'VirtualMediaPriv' => false,
+        'VirtualPowerAndResetPriv' => false,
+        'iLOConfigPriv' => false
+      }
       new_action = {
         'Oem' => {
           'Hp' => {
-            'Privileges' => {
-              'LoginPriv' => login,
-              'RemoteConsolePriv' => remote_console,
-              'UserConfigPriv' => user_config,
-              'VirtualMediaPriv' => virtual_media,
-              'VirtualPowerAndResetPriv' => virtual_power_and_reset,
-              'iLOConfigPriv' => ilo_config
-            }
+            'Privileges' => privileges
           }
         }
       }
       expect(@client).to receive(:rest_patch).with('/redfish/v1/AccountService/Accounts/1/', body: new_action).and_return(FakeResponse.new)
-      ret_val = @client.set_account_privileges(username, login, remote_console, user_config, virtual_media, virtual_power_and_reset, ilo_config)
+      ret_val = @client.set_account_privileges(username, privileges)
+      expect(ret_val).to eq(true)
+    end
+
+    it 'makes a GET and a PATCH (only on some attributes) rest call' do
+      body = {
+        'Items' => [
+          {
+            'Id' => '1',
+            'Oem' => {
+              'Hp' => {
+                'LoginName' => 'test1',
+                'Privileges' => {
+                  'LoginPriv' => true,
+                  'RemoteConsolePriv' => true,
+                  'UserConfigPriv' => true,
+                  'VirtualMediaPriv' => true,
+                  'VirtualPowerAndResetPriv' => true,
+                  'iLOConfigPriv' => true
+                }
+              }
+            }
+          },
+          {
+            'Id' => '2',
+            'Oem' => {
+              'Hp' => {
+                'LoginName' => 'test2',
+                'Privileges' => {
+                  'LoginPriv' => false,
+                  'RemoteConsolePriv' => false,
+                  'UserConfigPriv' => false,
+                  'VirtualMediaPriv' => false,
+                  'VirtualPowerAndResetPriv' => false,
+                  'iLOConfigPriv' => false
+                }
+              }
+            }
+          }
+        ]
+      }
+      fake_response = FakeResponse.new(body)
+      expect(@client).to receive(:rest_get).with('/redfish/v1/AccountService/Accounts/').and_return(fake_response)
+      username = 'test1'
+      privileges = {
+        'LoginPriv' => false,
+        'RemoteConsolePriv' => false,
+        'UserConfigPriv' => false
+      }
+      new_action = {
+        'Oem' => {
+          'Hp' => {
+            'Privileges' => privileges
+          }
+        }
+      }
+      expect(@client).to receive(:rest_patch).with('/redfish/v1/AccountService/Accounts/1/', body: new_action).and_return(FakeResponse.new)
+      ret_val = @client.set_account_privileges(username, privileges)
       expect(ret_val).to eq(true)
     end
   end

@@ -26,17 +26,12 @@ module ILO_SDK
       end
     end
 
-    # Set the UEFI shell start up
+    # Set the privileges for a user
     # @param [TrueClass, FalseClass] username
-    # @param [TrueClass, FalseClass] login
-    # @param [TrueClass, FalseClass] remote_console
-    # @param [TrueClass, FalseClass] user_config
-    # @param [TrueClass, FalseClass] virtual_media
-    # @param [TrueClass, FalseClass] virtual_media_power_and_reset
-    # @param [TrueClass, FalseClass] ilo_config
+    # @param [Hash] privileges
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_account_privileges(username, login, remote_console, user_config, virtual_media, virtual_power_and_reset, ilo_config)
+    def set_account_privileges(username, privileges)
       response = rest_get('/redfish/v1/AccountService/Accounts/')
       accounts = response_handler(response)['Items']
       id = '0'
@@ -49,14 +44,7 @@ module ILO_SDK
       new_action = {
         'Oem' => {
           'Hp' => {
-            'Privileges' => {
-              'LoginPriv' => login,
-              'RemoteConsolePriv' => remote_console,
-              'UserConfigPriv' => user_config,
-              'VirtualMediaPriv' => virtual_media,
-              'VirtualPowerAndResetPriv' => virtual_power_and_reset,
-              'iLOConfigPriv' => ilo_config
-            }
+            'Privileges' => privileges
           }
         }
       }
