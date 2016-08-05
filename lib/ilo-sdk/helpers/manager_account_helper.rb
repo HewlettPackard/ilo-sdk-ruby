@@ -29,6 +29,12 @@ module ILO_SDK
     # Set the privileges for a user
     # @param [TrueClass, FalseClass] username
     # @param [Hash] privileges
+    # @option privileges [TrueClass, FalseClass] :LoginPriv
+    # @option privileges [TrueClass, FalseClass] :RemoteConsolePriv
+    # @option privileges [TrueClass, FalseClass] :UserConfigPriv
+    # @option privileges [TrueClass, FalseClass] :VirtualMediaPriv
+    # @option privileges [TrueClass, FalseClass] :VirtualPowerAndResetPriv
+    # @option privileges [TrueClass, FalseClass] :iLOConfigPriv
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_account_privileges(username, privileges)
