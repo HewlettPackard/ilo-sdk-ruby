@@ -15,7 +15,7 @@ RSpec.describe ILO_SDK::Client do
     end
 
     it 'requires the host attribute to be set' do
-      expect { described_class.new({}) }.to raise_error(/Must set the host option/)
+      expect { described_class.new({}) }.to raise_error(ILO_SDK::InvalidClient, /Must set the host option/)
     end
 
     it 'automatically prepends the host with "https://"' do
@@ -26,7 +26,7 @@ RSpec.describe ILO_SDK::Client do
 
     it 'requires the password attribute to be set' do
       options = { host: 'ilo.example.com', user: 'Administrator' }
-      expect { described_class.new(options) }.to raise_error(/Must set the password/)
+      expect { described_class.new(options) }.to raise_error(ILO_SDK::InvalidClient, /Must set the password/)
     end
 
     it 'sets the username to "Administrator" by default' do

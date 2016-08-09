@@ -35,14 +35,14 @@ module ILO_SDK
       @log_level = options[:log_level] || :info
       @logger.level = @logger.class.const_get(@log_level.upcase) rescue @log_level
       @host = options[:host]
-      raise 'Must set the host option' unless @host
+      raise InvalidClient, 'Must set the host option' unless @host
       @host = 'https://' + @host unless @host.start_with?('http://', 'https://')
       @ssl_enabled = options[:ssl_enabled].nil? ? true : options[:ssl_enabled]
-      raise 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
+      raise InvalidClient, 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
       @logger.warn 'User option not set. Using default (Administrator)' unless options[:user]
       @user = options[:user] || 'Administrator'
       @password = options[:password]
-      raise 'Must set the password option' unless @password
+      raise InvalidClient, 'Must set the password option' unless @password
     end
 
     include Rest

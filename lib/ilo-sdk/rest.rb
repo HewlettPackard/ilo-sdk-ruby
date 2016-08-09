@@ -23,10 +23,13 @@ module ILO_SDK
     # @param [Hash] options the options for the request
     # @option options [String] :body Hash to be converted into json and set as the request body
     # @option options [String] :Content-Type ('application/json') Set to nil or :none to have this option removed
+    # @raise [InvalidRequest] if the request is invalid
+    # @raise [SocketError] if a connection could not be made
+    # @raise [OpenSSL::SSL::SSLError] if SSL validation of the iLO's certificate failed
     # @return [NetHTTPResponse] The response object
     def rest_api(type, path, options = {})
-      raise 'Must specify path' unless path
-      raise 'Must specify type' unless type
+      raise InvalidRequest, 'Must specify path' unless path
+      raise InvalidRequest, 'Must specify type' unless type
       @logger.debug "Making :#{type} rest call to #{@host}#{path}"
 
       uri = URI.parse(URI.escape("#{@host}#{path}"))
@@ -39,11 +42,14 @@ module ILO_SDK
       @logger.debug "  Response: Code=#{response.code}. Headers=#{response.to_hash}\n  Body=#{response.body}"
       response
     rescue OpenSSL::SSL::SSLError => e
-      msg = 'SSL verification failed for request. Please either:'
+      msg = 'SSL verification failed for the request. Please either:'
       msg += "\n  1. Install the certificate into your cert store"
       msg += ". Using cert store: #{ENV['SSL_CERT_FILE']}" if ENV['SSL_CERT_FILE']
       msg += "\n  2. Set the :ssl_enabled option to false for your ilo client"
       @logger.error msg
+      raise e
+    rescue SocketError => e
+      e.message.prepend("Failed to connect to iLO host #{@host}!\n")
       raise e
     end
 
@@ -88,8 +94,10 @@ module ILO_SDK
     # Handle the response for rest call.
     #   If an asynchronous task was started, this waits for it to complete.
     # @param [HTTPResponse] HTTP response
-    # @raise [RuntimeError] if the request failed
-    # @raise [RuntimeError] if a task was returned that did not complete successfully
+    # @raise [ILO_SDK::BadRequest] if the request failed with a 400 status
+    # @raise [ILO_SDK::Unauthorized] if the request failed with a 401 status
+    # @raise [ILO_SDK::NotFound] if the request failed with a 404 status
+    # @raise [ILO_SDK::RequestError] if the request failed with any other status
     # @return [Hash] The parsed JSON body
     def response_handler(response)
       case response.code.to_i
@@ -113,19 +121,23 @@ module ILO_SDK
       when RESPONSE_CODE_NO_CONTENT # Synchronous delete
         return {}
       when RESPONSE_CODE_BAD_REQUEST
-        raise "400 BAD REQUEST #{response.body}"
+        raise BadRequest, "400 BAD REQUEST #{response.body}"
       when RESPONSE_CODE_UNAUTHORIZED
-        raise "401 UNAUTHORIZED #{response.body}"
+        raise Unauthorized, "401 UNAUTHORIZED #{response.body}"
       when RESPONSE_CODE_NOT_FOUND
-        raise "404 NOT FOUND #{response.body}"
+        raise NotFound, "404 NOT FOUND #{response.body}"
       else
-        raise "#{response.code} #{response.body}"
+        raise RequestError, "#{response.code} #{response.body}"
       end
     end
 
 
     private
 
+    # @param type [Symbol] The type of request object to build (get, post, put, patch, or delete)
+    # @param uri [URI] URI object
+    # @param options [Hash] Options for building the request. All options except "body" are set as headers.
+    # @raise [ILO_SDK::InvalidRequest] if the request type is not recognized
     def build_request(type, uri, options)
       case type.downcase
       when 'get', :get
@@ -139,7 +151,7 @@ module ILO_SDK
       when 'delete', :delete
         request = Net::HTTP::Delete.new(uri.request_uri)
       else
-        raise "Invalid rest call: #{type}"
+        raise InvalidRequest, "Invalid rest call: #{type}"
       end
       options['Content-Type'] ||= 'application/json'
       options.delete('Content-Type') if [:none, 'none', nil].include?(options['Content-Type'])
