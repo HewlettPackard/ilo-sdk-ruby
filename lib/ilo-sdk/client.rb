@@ -53,9 +53,7 @@ module ILO_SDK
     include ComputerDetailsHelper
     include SNMPServiceHelper
     include PowerHelper
-    include AccountServiceHelper
     include LogEntryHelper
-    include ManagerAccountHelper
     include SecureBootHelper
     include BiosHelper
     include BootSettingsHelper
@@ -65,5 +63,6 @@ module ILO_SDK
     include ChassisHelper
     include ServiceRootHelper
     include HttpsCertHelper
+    include UserHelper
   end
 end
