@@ -13,7 +13,7 @@ RSpec.describe ILO_SDK::Client do
     end
 
     it 'requires a path' do
-      expect { @client.rest_api(:get, nil) }.to raise_error(/Must specify path/)
+      expect { @client.rest_api(:get, nil) }.to raise_error(ILO_SDK::InvalidRequest, /Must specify path/)
     end
 
     it 'logs the request type and path (debug level)' do
@@ -114,23 +114,23 @@ RSpec.describe ILO_SDK::Client do
 
     it 'raises an error for 400 status' do
       resp = FakeResponse.new({ message: 'Blah' }, 400)
-      expect { @client.response_handler(resp) }.to raise_error(/400 BAD REQUEST.*Blah/)
+      expect { @client.response_handler(resp) }.to raise_error(ILO_SDK::BadRequest, /400 BAD REQUEST.*Blah/)
     end
 
     it 'raises an error for 401 status' do
       resp = FakeResponse.new({ message: 'Blah' }, 401)
-      expect { @client.response_handler(resp) }.to raise_error(/401 UNAUTHORIZED.*Blah/)
+      expect { @client.response_handler(resp) }.to raise_error(ILO_SDK::Unauthorized, /401 UNAUTHORIZED.*Blah/)
     end
 
     it 'raises an error for 404 status' do
       resp = FakeResponse.new({ message: 'Blah' }, 404)
-      expect { @client.response_handler(resp) }.to raise_error(/404 NOT FOUND.*Blah/)
+      expect { @client.response_handler(resp) }.to raise_error(ILO_SDK::NotFound, /404 NOT FOUND.*Blah/)
     end
 
     it 'raises an error for undefined status codes' do
       [0, 19, 199, 203, 399, 402, 500].each do |status|
         resp = FakeResponse.new({ message: 'Blah' }, status)
-        expect { @client.response_handler(resp) }.to raise_error(/#{status}.*Blah/)
+        expect { @client.response_handler(resp) }.to raise_error(ILO_SDK::RequestError, /#{status}.*Blah/)
       end
     end
   end
