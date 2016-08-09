@@ -70,43 +70,47 @@ client.delete_user('user1')
 #### Bios
 ```ruby
 # Get BIOS base configuration:
-baseconfig = client.get_bios_baseconfig
+baseconfig = client.get_bios_settings(['BaseConfig'])['BaseConfig']
 
 # Revert BIOS:
 client.revert_bios
 
 # Get UEFI shell startup settings:
-uefi_shell_startup = client.get_uefi_shell_startup
+uefi_shell_startup = client.get_bios_settings(['UefiShellStartup', 'UefiShellStartupLocation', 'UefiShellStartupUrl'])
 
 # Set UEFI shell startup settings:
-uefi_shell_startup_location = 'Auto'
-uefi_shell_startup_url = 'http://wwww.uefi.com'
-client.uefi_shell_startup('Enabled', uefi_shell_startup_location, uefi_shell_startup_url)
+uefi = {
+  'UefiShallStartup' => 'Enabled',
+  'UefiShellStartupLocation' => 'Auto',
+  'UefiShellStartupUrl' => 'http://wwww.uefi.com'
+}
+client.set_bios_settings(uefi)
 
 # Get BIOS DHCP settings:
-bios_dhcp = client.get_bios_dhcp
+bios_dhcp = client.get_bios_settings(['Dhcpv4', 'Ipv4Address', 'Ipv4Gateway', 'Ipv4PrimaryDNS', 'Ipv4SecondaryDNS', 'Ipv4SubnetMask'])
 
 # Set BIOS DHCP settings:
-ipv4_address = '10.1.1.111'
-ipv4_gateway = '10.1.1.0'
-ipv4_primary_dns = '10.1.1.1'
-ipv4_secondary_dns = '10.1.1.2'
-ipv4_subnet_mark = '255.255.255.0'
-client.set_bios_dhcp('Disabled', ipv4_address, ipv4_gateway, ipv4_primary_dns, ipv4_secondary_dns, ipv4_subnet_mark)
+dhcp = {
+  'Dhcpv4' => 'Disabled',
+  'Ipv4Address' => '10.1.1.111',
+  'Ipv4Gateway' => '10.1.1.0',
+  'Ipv4PrimaryDNS' => '10.1.1.1',
+  'Ipv4SecondaryDNS' => '10.1.1.2',
+  'Ipv4SubnetMask' => '255.255.255.0'
+}
+client.set_bios_settings(dhcp)
 
 # Get the URL boot file:
-url_boot_file = client.get_url_boot_file
+url_boot_file = client.get_bios_settings(['UrlBootFile'])
 
 # Set the URL boot file:
-client.set_url_boot_file('http://www.urlbootfile.iso')
+client.set_bios_settings(UrlBootFile: 'http://www.urlbootfile.iso')
 
 # Get BIOS service settings:
-bios_service_settings = client.get_bios_service
+bios_service_settings = client.get_bios_settings(['ServiceName', 'ServiceEmail'])
 
 # Set BIOS service settings:
-service_name = 'my_name'
-service_email = 'my_name@hpe.com'
-client.set_bios_service(service_name, service_email)
+client.set_bios_settings(ServiceName: 'my_name', ServiceEmail: 'my_name@hpe.com')
 ```
 
 #### Boot Settings
