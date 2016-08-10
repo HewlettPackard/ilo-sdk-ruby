@@ -52,21 +52,6 @@ level=(Symbol, etc.) # The parameter here will be the log_level attribute
 ## Actions
 Actions are performed on the client, and defined in the [helper modules](lib/ilo-sdk/helpers).
 
-#### Account Service
-```ruby
-# Get list of users:
-users = client.get_users
-
-# Create a user:
-client.create_user('user1', 'password123')
-
-# Change a user's password:
-client.change_password('user1', 'newpassword123')
-
-# Delete a user:
-client.delete_user('user1')
-```
-
 #### Bios
 ```ruby
 # Get BIOS base configuration:
@@ -258,27 +243,6 @@ duration = 10 # hours
 logs = client.get_log(severity_level, duration, log_type)
 ```
 
-### Manager Account
-```ruby
-# Get the Account Privileges for a specific user:
-username = 'Administrator'
-client.get_account_privileges(username)
-
-# Set the Login Privilege to true for a specific user:
-client.set_account_privileges(username, LoginPriv: true)
-
-# Set all of the Account Privileges for a specific user:
-privileges = {
-  'LoginPriv' => true,
-  'RemoteConsolePriv' => true,
-  'UserConfigPriv' => true,
-  'VirtualMediaPriv' => true,
-  'VirtualPowerAndResetPriv' => true,
-  'iLOConfigPriv' => true
-}
-client.set_account_privileges(username, privileges)
-```
-
 #### Manager Network Protocol
 ```ruby
 # Get the minutes until session timeout:
@@ -332,6 +296,39 @@ snmp_alerts_enabled = client.get_snmp_alerts_enabled
 snmp_mode = 'Agentless'
 snmp_alerts_enabled = true
 client.set_snmp(snmp_mode, snmp_alerts_enabled)
+```
+
+#### User
+```ruby
+# Get list of users:
+users = client.get_users
+
+# Create a user:
+username = 'Administrator'
+client.create_user(username, 'password123')
+
+# Change a user's password:
+client.change_password(username, 'newpassword123')
+
+# Get the Account Privileges for a specific user:
+client.get_account_privileges(username)
+
+# Set the Login Privilege to true for a specific user:
+client.set_account_privileges(username, LoginPriv: true)
+
+# Set all of the Account Privileges for a specific user:
+privileges = {
+  'LoginPriv' => true,
+  'RemoteConsolePriv' => true,
+  'UserConfigPriv' => true,
+  'VirtualMediaPriv' => true,
+  'VirtualPowerAndResetPriv' => true,
+  'iLOConfigPriv' => true
+}
+client.set_account_privileges(username, privileges)
+
+# Delete a user:
+client.delete_user('user1')
 ```
 
 #### Virtual Media
