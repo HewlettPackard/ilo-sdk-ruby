@@ -47,5 +47,12 @@ RSpec.describe ILO_SDK::Client do
       client = described_class.new(options)
       expect(client.log_level).to eq(:error)
     end
+
+    it 'allows the proxy_addr and proxy_port attribute to be set' do
+      options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123', proxy_addr: 'your.proxy.host', proxy_port: 8080 }
+      client  = described_class.new(options)
+      expect(client.proxy_addr).to eq('your.proxy.host')
+      expect(client.proxy_port).to eq(8080)
+    end
   end
 end
