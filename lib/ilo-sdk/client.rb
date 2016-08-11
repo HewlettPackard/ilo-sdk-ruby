@@ -17,7 +17,7 @@ Dir[File.join(File.dirname(__FILE__), '/helpers/*.rb')].each { |file| require fi
 module ILO_SDK
   # The client defines the connection to the iLO and handles communication with it
   class Client
-    attr_accessor :host, :user, :password, :ssl_enabled, :logger, :log_level
+    attr_accessor :host, :user, :password, :ssl_enabled, :logger, :log_level, :proxy_addr, :proxy_port
 
     # Create a client object
     # @param [Hash] options the options to configure the client
@@ -38,6 +38,10 @@ module ILO_SDK
       raise InvalidClient, 'Must set the host option' unless @host
       @host = 'https://' + @host unless @host.start_with?('http://', 'https://')
       @ssl_enabled = options[:ssl_enabled].nil? ? true : options[:ssl_enabled]
+      @proxy_addr = options[:proxy_addr]
+      @proxy_port = options[:proxy_port]
+      @proxy_addr ||= nil
+      @proxy_port ||= nil
       raise InvalidClient, 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
       @logger.warn 'User option not set. Using default (Administrator)' unless options[:user]
       @user = options[:user] || 'Administrator'
