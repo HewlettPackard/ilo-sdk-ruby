@@ -3,6 +3,10 @@
 
 Software Development Kit for interacting with the Hewlett Packard Enterprise iLO (Integrated Lights-Out) server management technology.
 
+### Supported iLO versions:
+
+- iLO 4
+
 ## Installation
 
 - Require the gem in your Gemfile:
@@ -31,7 +35,8 @@ client = ILO_SDK::Client.new(
   password: 'secret123',
   ssl_enabled: true,                  # This is the default and strongly encouraged
   logger: Logger.new(STDOUT),         # This is the default
-  log_level: :info                   # This is the default
+  log_level: :info,                   # This is the default
+  disable_proxy: true                 # Default is false. Set to disable, even if ENV['http_proxy'] is set
 )
 ```
 

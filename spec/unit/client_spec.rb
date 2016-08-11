@@ -10,6 +10,7 @@ RSpec.describe ILO_SDK::Client do
       expect(client.user).to eq('Administrator')
       expect(client.password).to eq('secret123')
       expect(client.ssl_enabled).to eq(true)
+      expect(client.disable_proxy).to eq(nil)
       expect(client.log_level).to eq(:info)
       expect(client.logger).to be_a(Logger)
     end
@@ -40,6 +41,12 @@ RSpec.describe ILO_SDK::Client do
       options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123', ssl_enabled: false }
       client = described_class.new(options)
       expect(client.ssl_enabled).to eq(false)
+    end
+
+    it 'allows the disable_proxy attribute to be set' do
+      options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123', disable_proxy: true }
+      client = described_class.new(options)
+      expect(client.disable_proxy).to eq(true)
     end
 
     it 'allows the log level to be set' do
