@@ -17,7 +17,7 @@ Dir[File.join(File.dirname(__FILE__), '/helpers/*.rb')].each { |file| require fi
 module ILO_SDK
   # The client defines the connection to the iLO and handles communication with it
   class Client
-    attr_accessor :host, :user, :password, :ssl_enabled, :logger, :log_level
+    attr_accessor :host, :user, :password, :ssl_enabled, :disable_proxy, :logger, :log_level
 
     # Create a client object
     # @param [Hash] options the options to configure the client
@@ -28,6 +28,7 @@ module ILO_SDK
     #   Must implement debug(String), info(String), warn(String), error(String), & level=
     # @option options [Symbol] :log_level (:info) Log level. Logger must define a constant with this name. ie Logger::INFO
     # @option options [Boolean] :ssl_enabled (true) Use ssl for requests?
+    # @option options [Boolean] :disable_proxy (false) Disable usage of a proxy for requests?
     def initialize(options = {})
       options = Hash[options.map { |k, v| [k.to_sym, v] }] # Convert string hash keys to symbols
       @logger = options[:logger] || Logger.new(STDOUT)
@@ -39,6 +40,8 @@ module ILO_SDK
       @host = 'https://' + @host unless @host.start_with?('http://', 'https://')
       @ssl_enabled = options[:ssl_enabled].nil? ? true : options[:ssl_enabled]
       raise InvalidClient, 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
+      @disable_proxy = options[:disable_proxy]
+      raise InvalidClient, 'disable_proxy option must be true, false, or nil' unless [true, false, nil].include?(@disable_proxy)
       @logger.warn 'User option not set. Using default (Administrator)' unless options[:user]
       @user = options[:user] || 'Administrator'
       @password = options[:password]

@@ -24,6 +24,17 @@ RSpec.describe ILO_SDK::Client do
       end
     end
 
+    it 'respects the disable_proxy client option' do
+      @client.disable_proxy = true
+      expect(Net::HTTP).to receive(:new).with(anything, anything, nil, nil).and_raise('Fake Error')
+      expect { @client.rest_api(:get, path) }.to raise_error('Fake Error')
+    end
+    
+    it 'does not disable the proxy unless the disable_proxy client option is set' do
+      expect(Net::HTTP).to receive(:new).with(anything, anything).and_raise('Fake Error')
+      expect { @client.rest_api(:get, path) }.to raise_error('Fake Error')
+    end
+
     it 'raises an error when the ssl validation fails' do
       allow_any_instance_of(Net::HTTP).to receive(:request).and_raise(OpenSSL::SSL::SSLError, 'Msg')
       expect(@client.logger).to receive(:error).with(/SSL verification failed/)
