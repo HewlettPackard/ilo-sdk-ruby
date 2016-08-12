@@ -10,6 +10,7 @@ RSpec.describe ILO_SDK::Client do
       expect(client.user).to eq('Administrator')
       expect(client.password).to eq('secret123')
       expect(client.ssl_enabled).to eq(true)
+      expect(client.disable_proxy).to eq(nil)
       expect(client.log_level).to eq(:info)
       expect(client.logger).to be_a(Logger)
     end
@@ -46,6 +47,12 @@ RSpec.describe ILO_SDK::Client do
     it 'does not allow invalid ssl_enabled attributes' do
       options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123', ssl_enabled: 'bad' }
       expect { described_class.new(options) }.to raise_error(ILO_SDK::InvalidClient, /must be true or false/)
+    end
+
+    it 'allows the disable_proxy attribute to be set' do
+      options = { host: 'ilo.example.com', user: 'Administrator', password: 'secret123', disable_proxy: true }
+      client = described_class.new(options)
+      expect(client.disable_proxy).to eq(true)
     end
 
     it 'allows the log level to be set' do
