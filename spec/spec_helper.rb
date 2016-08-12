@@ -18,9 +18,6 @@ require_relative 'support/fake_response'
 
 RSpec.configure do |config|
   config.before(:each) do
-    # Clear environment variables
-    ILO_SDK::ENV_VARS.each do |name|
-      ENV[name] = nil
-    end
+    ILO_SDK::ENV_VARS.each { |e| ENV[e] = nil } # Clear environment variables
   end
 end
