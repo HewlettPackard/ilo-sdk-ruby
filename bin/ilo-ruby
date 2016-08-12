@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'ilo-sdk'
+
+ILO_SDK::Cli::Runner.new(ARGV.dup).execute!

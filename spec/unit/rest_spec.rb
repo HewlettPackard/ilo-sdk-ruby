@@ -91,6 +91,11 @@ RSpec.describe ILO_SDK::Client do
       expect(@client.response_handler(FakeResponse.new(data))).to eq(data)
     end
 
+    it 'returns the body if it cannot be JSON-parsed for 200 status' do
+      expect_any_instance_of(Logger).to receive(:warn).with(/Failed to parse JSON response/).and_return(true)
+      expect(@client.response_handler(FakeResponse.new('Fake JSON'))).to eq('Fake JSON')
+    end
+
     it 'returns the JSON-parsed body for 201 status' do
       expect(@client.response_handler(FakeResponse.new(data, 201))).to eq(data)
     end

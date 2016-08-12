@@ -1,7 +1,7 @@
-# (C) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
+# you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software distributed
@@ -12,7 +12,9 @@
 require_relative 'ilo-sdk/version'
 require_relative 'ilo-sdk/client'
 require_relative 'ilo-sdk/exceptions'
+require_relative 'ilo-sdk/cli'
 
 # Module for interracting with the HPE iLO API
 module ILO_SDK
+  ENV_VARS = %w(ILO_HOST ILO_USER ILO_PASSWORD ILO_SSL_ENABLED).freeze
 end
