@@ -1,6 +1,8 @@
 ### New (Unreleased)
  - Added custom exception classes
  - Added disable_proxy client option
+ - Added CLI
+ - Support environment variables
 
 ### v1.1.0
  - Added ManagerAccountHelper (to allow setting user permissions)

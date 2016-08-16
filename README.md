@@ -24,8 +24,8 @@ Software Development Kit for interacting with the Hewlett Packard Enterprise iLO
 
 
 ## Client
-Everything you do with this API happens through a client object.  
-Creating the client object is the first step; then you can perform actions on the client.  
+Everything you do with this API happens through a client object.
+Creating the client object is the first step; then you can perform actions on the client.
 
 ```ruby
 require 'ilo-sdk'
@@ -40,7 +40,20 @@ client = ILO_SDK::Client.new(
 )
 ```
 
-:lock: Tip: Check the file permissions because the password is stored in clear-text.
+:lock: Tip: Check the file permissions when storing passwords in clear-text.
+
+#### Environment Variables
+
+You can also set many client options using environment variables. For bash:
+
+```bash
+export ILO_HOST='https://oneview.example.com'
+export ILO_USER='Administrator'
+export ILO_PASSWORD='secret123'
+export ILO_SSL_ENABLED=false # NOTE: Disabling SSL is strongly discouraged. Please see the CLI section for import instructions.
+```
+
+:lock: Tip: Be sure nobody can access to your environment variables
 
 ### Custom logging
 The default logger is a standard logger to STDOUT, but if you want to specify your own, you can.  However, your logger must implement the following methods:
@@ -369,6 +382,29 @@ data = client.response_handler(response)
 This example is about as basic as it gets, but you can make any type of iLO request.
 If a resource does not do what you need, this will allow you to do it.
 Please refer to the documentation and [code](lib/ilo-sdk/rest.rb) for complete list of methods and information about how to use them.
+
+
+## CLI
+
+This gem also comes with a command-line interface to make interracting with the iLO API without needing to create a Ruby program.
+
+Note: In order to use this, you will need to make sure your ruby bin directory is in your path. Run $ gem environment to see where the executable paths are for your Ruby installation.
+
+To get started, run `$ ilo-ruby --help`.
+
+To communicate with an appliance, you will need to set up a few environment variables so it knows how to communicate. Run $ ilo-ruby env to see the available environment variables.
+
+Here are a few examples of how you might want to use the CLI:
+
+##### Start an interactive console session with an iLO connection:
+
+```bash
+$ ilo-ruby console
+Connected to https://ilo.example.com
+HINT: The @client object is available to you
+>
+```
+
 
 ## License
 This project is licensed under the Apache 2.0 license. Please see [LICENSE](LICENSE) for more info.

@@ -12,15 +12,19 @@ Metrics/ModuleLength:
 Metrics/ParameterLists:
   Max: 6
 
-Style/FileName:
-  Exclude:
-    - 'lib/ilo-sdk.rb'
-
 Style/IndentationWidth:
   Width: 2
 
 Style/VariableName:
   EnforcedStyle: snake_case
+
+Style/FileName:
+  Exclude:
+    - 'lib/ilo-sdk.rb'
+
+Style/AlignParameters:
+  Exclude:
+    - 'lib/ilo-sdk/cli.rb'
 
 
 Style/AccessorMethodName:

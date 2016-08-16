@@ -1,10 +1,10 @@
 # coding: utf-8
 # http://guides.rubygems.org/specification-reference
 
-# (C) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
+# you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software distributed
@@ -29,7 +29,9 @@ Gem::Specification.new do |spec|
   spec.executables   = all_files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'pry'
+  spec.add_runtime_dependency 'thor'
+  spec.add_runtime_dependency 'pry'
+
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rake'

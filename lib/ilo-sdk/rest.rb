@@ -1,4 +1,4 @@
-# (C) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
@@ -43,9 +43,9 @@ module ILO_SDK
       response
     rescue OpenSSL::SSL::SSLError => e
       msg = 'SSL verification failed for the request. Please either:'
-      msg += "\n  1. Install the certificate into your cert store"
+      msg += "\n  1. Install the necessary certificate(s) into your cert store"
       msg += ". Using cert store: #{ENV['SSL_CERT_FILE']}" if ENV['SSL_CERT_FILE']
-      msg += "\n  2. Set the :ssl_enabled option to false for your ilo client"
+      msg += "\n  2. Set the :ssl_enabled option to false for your iLO client (not recommended)"
       @logger.error msg
       raise e
     rescue SocketError => e

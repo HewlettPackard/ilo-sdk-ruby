@@ -21,7 +21,7 @@ module ILO_SDK
 
     # Create a client object
     # @param [Hash] options the options to configure the client
-    # @option options [String] :host URL, hostname, or IP address of the iLO
+    # @option options [String] :host (ENV['ILO_HOST']) URL, hostname, or IP address of the iLO
     # @option options [String] :user ('Administrator') Username to use for authentication with the iLO
     # @option options [String] :password Password to use for authentication with the iLO
     # @option options [Logger] :logger (Logger.new(STDOUT)) Logger object to use.
@@ -35,16 +35,29 @@ module ILO_SDK
       [:debug, :info, :warn, :error, :level=].each { |m| raise "Logger must respond to #{m} method " unless @logger.respond_to?(m) }
       @log_level = options[:log_level] || :info
       @logger.level = @logger.class.const_get(@log_level.upcase) rescue @log_level
-      @host = options[:host]
+      @host = options[:host] || ENV['ILO_HOST']
       raise InvalidClient, 'Must set the host option' unless @host
       @host = 'https://' + @host unless @host.start_with?('http://', 'https://')
-      @ssl_enabled = options[:ssl_enabled].nil? ? true : options[:ssl_enabled]
-      raise InvalidClient, 'ssl_enabled option must be either true or false' unless [true, false].include?(@ssl_enabled)
+      @ssl_enabled = true # Default
+      if ENV.key?('ILO_SSL_ENABLED')
+        @ssl_enabled = case ENV['ILO_SSL_ENABLED']
+                       when 'true', '1' then true
+                       when 'false', '0' then false
+                       else ENV['ILO_SSL_ENABLED']
+                       end
+      end
+      @ssl_enabled = options[:ssl_enabled] unless options[:ssl_enabled].nil?
+      unless [true, false].include?(@ssl_enabled)
+        raise InvalidClient, "ssl_enabled option must be true or false. Got '#{@ssl_enabled}'"
+      end
+      unless @ssl_enabled
+        @logger.warn "SSL is disabled for all requests to #{@host}! We recommend you import the necessary certificates instead. of disabling SSL"
+      end
       @disable_proxy = options[:disable_proxy]
       raise InvalidClient, 'disable_proxy option must be true, false, or nil' unless [true, false, nil].include?(@disable_proxy)
-      @logger.warn 'User option not set. Using default (Administrator)' unless options[:user]
-      @user = options[:user] || 'Administrator'
-      @password = options[:password]
+      @logger.warn 'User option not set. Using default (Administrator)' unless options[:user] || ENV['ILO_USER']
+      @user = options[:user] || ENV['ILO_USER'] || 'Administrator'
+      @password = options[:password] || ENV['ILO_PASSWORD']
       raise InvalidClient, 'Must set the password option' unless @password
     end
 
