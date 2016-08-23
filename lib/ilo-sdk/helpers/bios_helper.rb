@@ -13,6 +13,7 @@ module ILO_SDK
   # Contains helper methods for Bios actions
   module BiosHelper
     # Get all the BIOS settings
+    # @param system_id [Integer, String] ID of the system
     # @raise [RuntimeError] if the request failed
     # @return [Hash] BIOS settings
     def get_bios_settings(system_id = 1)
