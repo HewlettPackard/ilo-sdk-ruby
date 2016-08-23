@@ -87,6 +87,17 @@ client.delete_user('user1')
 
 #### Bios
 ```ruby
+# Get all BIOS settings
+settings = client.get_bios_settings
+
+# Set BIOS settings
+client.set_bios_settings(
+  UefiShellStartup: 'Enabled',
+  Ipv4Gateway: '10.0.1.1',
+  ServiceEmail: 'admin@domain.com'
+  # Note that you can set many more options here. This is just an example.
+)
+
 # Get BIOS base configuration:
 baseconfig = client.get_bios_baseconfig
 
@@ -123,7 +134,7 @@ bios_service_settings = client.get_bios_service
 
 # Set BIOS service settings:
 service_name = 'my_name'
-service_email = 'my_name@hpe.com'
+service_email = 'my_name@domain.com'
 client.set_bios_service(service_name, service_email)
 ```
 
@@ -272,7 +283,7 @@ duration = 10 # hours
 logs = client.get_log(severity_level, duration, log_type)
 ```
 
-### Manager Account
+#### Manager Account
 ```ruby
 # Get the Account Privileges for a specific user:
 username = 'Administrator'

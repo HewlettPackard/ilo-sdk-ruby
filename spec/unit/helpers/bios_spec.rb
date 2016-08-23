@@ -3,6 +3,43 @@ require_relative './../../spec_helper'
 RSpec.describe ILO_SDK::Client do
   include_context 'shared context'
 
+  let(:settings) do
+    { 'key1' => 'val1', 'key2' => 'val2', 'key3' => 'val3' }
+  end
+
+  describe '#get_bios_settings' do
+    it 'makes a GET rest call' do
+      fake_response = FakeResponse.new(settings)
+      expect(@client).to receive(:rest_get).with('/redfish/v1/Systems/1/bios/Settings/').and_return(fake_response)
+      expect(@client.get_bios_settings).to eq(settings)
+    end
+
+    it 'allows the system_id to be set' do
+      fake_response = FakeResponse.new(settings)
+      expect(@client).to receive(:rest_get).with('/redfish/v1/Systems/3/bios/Settings/').and_return(fake_response)
+      expect(@client.get_bios_settings(3)).to eq(settings)
+    end
+  end
+
+  describe '#set_bios_settings' do
+    it 'makes a PATCH rest call' do
+      expect(@client).to receive(:rest_patch).with('/redfish/v1/Systems/1/bios/Settings/', body: settings).and_return(FakeResponse.new)
+      expect(@client.set_bios_settings(settings)).to eq(true)
+    end
+
+    it 'allows the system_id to be set' do
+      expect(@client).to receive(:rest_patch).with('/redfish/v1/Systems/3/bios/Settings/', body: settings).and_return(FakeResponse.new)
+      @client.set_bios_settings(settings, 3)
+    end
+
+    it 'prints a warning if one is returned' do
+      fake_response = FakeResponse.new('error' => 'Message')
+      expect(@client).to receive(:rest_patch).with('/redfish/v1/Systems/1/bios/Settings/', body: settings).and_return(fake_response)
+      expect(@client.logger).to receive(:warn).with('error' => 'Message').and_return true
+      @client.set_bios_settings(settings)
+    end
+  end
+
   describe '#get_bios_baseconfig' do
     it 'makes a GET rest call' do
       fake_response = FakeResponse.new('BaseConfig' => 'default')
