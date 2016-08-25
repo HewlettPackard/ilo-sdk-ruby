@@ -1,4 +1,5 @@
 # Ruby SDK for HPE iLO
+
 [![Gem Version](https://badge.fury.io/rb/ilo-sdk.svg)](https://badge.fury.io/rb/ilo-sdk)
 
 Software Development Kit for interacting with the Hewlett Packard Enterprise iLO (Integrated Lights-Out) server management technology.
@@ -24,6 +25,7 @@ Software Development Kit for interacting with the Hewlett Packard Enterprise iLO
 
 
 ## Client
+
 Everything you do with this API happens through a client object.
 Creating the client object is the first step; then you can perform actions on the client.
 
@@ -56,6 +58,7 @@ export ILO_SSL_ENABLED=false # NOTE: Disabling SSL is strongly discouraged. Plea
 :lock: Tip: Be sure nobody can access to your environment variables
 
 ### Custom logging
+
 The default logger is a standard logger to STDOUT, but if you want to specify your own, you can.  However, your logger must implement the following methods:
 
 ```ruby
@@ -68,9 +71,11 @@ level=(Symbol, etc.) # The parameter here will be the log_level attribute
 
 
 ## Actions
+
 Actions are performed on the client, and defined in the [helper modules](lib/ilo-sdk/helpers).
 
 #### Account Service
+
 ```ruby
 # Get list of users:
 users = client.get_users
@@ -86,7 +91,19 @@ client.delete_user('user1')
 ```
 
 #### Bios
+
 ```ruby
+# Get all BIOS settings
+settings = client.get_bios_settings
+
+# Set BIOS settings
+client.set_bios_settings(
+  UefiShellStartup: 'Enabled',
+  Ipv4Gateway: '10.0.1.1',
+  ServiceEmail: 'admin@domain.com'
+  # Note: You can set many more options here. This is just an example.
+)
+
 # Get BIOS base configuration:
 baseconfig = client.get_bios_baseconfig
 
@@ -123,11 +140,12 @@ bios_service_settings = client.get_bios_service
 
 # Set BIOS service settings:
 service_name = 'my_name'
-service_email = 'my_name@hpe.com'
+service_email = 'my_name@domain.com'
 client.set_bios_service(service_name, service_email)
 ```
 
 #### Boot Settings
+
 ```ruby
 # Get boot order base configuration:
 baseconfig = client.get_boot_baseconfig
@@ -158,6 +176,7 @@ client.set_temporary_boot_order(boot_source_override_target)
 ```
 
 #### Chassis
+
 ```ruby
 # Get power metrics information:
 power_metrics = client.get_power_metrics
@@ -167,6 +186,7 @@ thermal_metrics = client.get_thermal_metrics
 ```
 
 #### Computer Details
+
 ```ruby
 # Get computer details (including general, network, and array controller details):
 computer_details = client.get_computer_details
@@ -182,21 +202,21 @@ array_controller_details = client.get_array_controller_details
 ```
 
 #### Computer System
+
 ```ruby
-# Get the computer system asset tag:
-asset_tag = client.get_asset_tag
+# Get computer system settings
+settings = client.get_system_settings
 
-# Set the computer system asset tag:
-client.set_asset_tag('HP001')
-
-# Get the indicator led state:
-indicator_led = client.get_indicator_led
-
-# Set the indicator led state:
-client.set_indicator_led('Lit')
+# Set computer system settings
+client.set_system_settings(
+  AssetTag: 'HP001',
+  IndicatorLED: 'Lit'
+  # Note: You can set more options here. This is just an example.
+)
 ```
 
 #### Date Time
+
 ```ruby
 # Get the time zone:
 time_zone = client.get_time_zone
@@ -219,6 +239,7 @@ client.set_ntp_server(ntp_servers)
 ```
 
 #### Firmware
+
 ```ruby
 # Get the firmware version:
 fw_version = client.get_fw_version
@@ -228,6 +249,7 @@ client.set_fw_upgrade('www.firmwareupgrade.com')
 ```
 
 #### HTTPS Certificate
+
 ```ruby
 # Get the current SSL Certificate and check to see if expires within 24 hours
 expiration = client.get_certificate.not_after.to_datetime
@@ -258,6 +280,7 @@ end
 ```
 
 #### Log Entry
+
 ```ruby
 # Clear a specific type of logs:
 log_type = 'IEL'
@@ -272,7 +295,8 @@ duration = 10 # hours
 logs = client.get_log(severity_level, duration, log_type)
 ```
 
-### Manager Account
+#### Manager Account
+
 ```ruby
 # Get the Account Privileges for a specific user:
 username = 'Administrator'
@@ -294,6 +318,7 @@ client.set_account_privileges(username, privileges)
 ```
 
 #### Manager Network Protocol
+
 ```ruby
 # Get the minutes until session timeout:
 timeout = client.get_timeout
@@ -303,6 +328,7 @@ client.set_timeout(60)
 ```
 
 #### Power
+
 ```ruby
 # Get the power state of the system:
 power_state = client.get_power_state
@@ -315,6 +341,7 @@ client.reset_ilo
 ```
 
 #### Secure Boot
+
 ```ruby
 # Get whether or not UEFI secure boot is enabled:
 uefi_secure_boot = client.get_uefi_secure_boot
@@ -324,6 +351,7 @@ client.set_uefi_secure_boot(true)
 ```
 
 #### Service Root
+
 ```ruby
 # Get the schema information with a given prefix:
 schema_prefix = 'Account'
@@ -335,6 +363,7 @@ registry = client.get_registry(registry_prefix)
 ```
 
 #### SNMP
+
 ```ruby
 # Get the SNMP mode:
 snmp_mode = client.get_snmp_mode
@@ -349,6 +378,7 @@ client.set_snmp(snmp_mode, snmp_alerts_enabled)
 ```
 
 #### Virtual Media
+
 ```ruby
 # Get the virtual media information:
 virtual_media = client.get_virtual_media
@@ -366,6 +396,7 @@ client.eject_virtual_media(id)
 ```
 
 ## Custom requests
+
 In most cases, interacting with the client object is enough, but sometimes you need to make your own custom requests to the iLO.
 This project makes it extremely easy to do with some built-in methods for the client object. Here are some examples:
 
@@ -407,10 +438,12 @@ HINT: The @client object is available to you
 
 
 ## License
+
 This project is licensed under the Apache 2.0 license. Please see [LICENSE](LICENSE) for more info.
 
 
 ## Contributing and feature requests
+
 **Contributing:** You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
 We are passionate about improving this project, and glad to accept help to make it better. However, keep the following in mind:
 
@@ -422,11 +455,13 @@ We are passionate about improving this project, and glad to accept help to make 
 This feedback is crucial for us to deliver a useful product. Do not assume we have already thought of everything, because we assure you that is not the case.
 
 ### Building the Gem
+
 First run `$ bundle` (requires the bundler gem), then...
  - To build only, run `$ rake build`.
  - To build and install the gem, run `$ rake install`.
 
 ### Testing
+
  - RuboCop: `$ rake rubocop`
  - Unit: `$ rake spec`
  - All test: `$ rake test`
@@ -434,6 +469,7 @@ First run `$ bundle` (requires the bundler gem), then...
 Note: run `$ rake -T` to get a list of all the available rake tasks.
 
 ## Authors
+
  - Anirudh Gupta - [@Anirudh-Gupta](https://github.com/Anirudh-Gupta)
  - Bik Bajwa - [@bikbajwa](https://github.com/bikbajwa)
  - Jared Smartt - [@jsmartt](https://github.com/jsmartt)

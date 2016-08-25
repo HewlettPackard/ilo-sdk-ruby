@@ -12,6 +12,25 @@
 module ILO_SDK
   # Contains helper methods for Bios actions
   module BiosHelper
+    # Get all the BIOS settings
+    # @param system_id [Integer, String] ID of the system
+    # @raise [RuntimeError] if the request failed
+    # @return [Hash] BIOS settings
+    def get_bios_settings(system_id = 1)
+      response_handler(rest_get("/redfish/v1/Systems/#{system_id}/bios/Settings/"))
+    end
+
+    # Set BIOS settings
+    # @param options [Hash] Hash of options to set
+    # @param system_id [Integer, String] ID of the system
+    # @raise [RuntimeError] if the request failed
+    # @return true
+    def set_bios_settings(options, system_id = 1)
+      r = response_handler(rest_patch("/redfish/v1/Systems/#{system_id}/bios/Settings/", body: options))
+      @logger.warn(r) if r['error']
+      true
+    end
+
     # Get the bios base config
     # @raise [RuntimeError] if the request failed
     # @return [Fixnum] bios_baseconfig
@@ -44,9 +63,9 @@ module ILO_SDK
     end
 
     # Set the UEFI shell start up
-    # @param [String, Symbol] uefi_shell_startup
-    # @param [String, Symbol] uefi_shell_startup_location
-    # @param [String, Symbol] uefi_shell_startup_url
+    # @param uefi_shell_startup [String, Symbol]
+    # @param uefi_shell_startup_location [String, Symbol]
+    # @param uefi_shell_startup_url [String, Symbol]
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_uefi_shell_startup(uefi_shell_startup, uefi_shell_startup_location, uefi_shell_startup_url)
@@ -77,12 +96,12 @@ module ILO_SDK
     end
 
     # Set the BIOS DHCP
-    # @param [String, Symbol] dhcpv4
-    # @param [String, Symbol] ipv4_address
-    # @param [String, Symbol] ipv4_gateway
-    # @param [String, Symbol] ipv4_primary_dns
-    # @param [String, Symbol] ipv4_secondary_dns
-    # @param [String, Symbol] ipv4_subnet_mask
+    # @param dhcpv4 [String, Symbol]
+    # @param ipv4_address [String, Symbol]
+    # @param ipv4_gateway [String, Symbol]
+    # @param ipv4_primary_dns [String, Symbol]
+    # @param ipv4_secondary_dns [String, Symbol]
+    # @param ipv4_subnet_mask [String, Symbol]
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_bios_dhcp(dhcpv4, ipv4_address = '', ipv4_gateway = '', ipv4_primary_dns = '', ipv4_secondary_dns = '', ipv4_subnet_mask = '')
@@ -108,7 +127,7 @@ module ILO_SDK
     end
 
     # Set the URL boot file
-    # @param [String, Symbol] url_boot_file
+    # @param url_boot_file [String, Symbol]
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_url_boot_file(url_boot_file)
@@ -131,8 +150,8 @@ module ILO_SDK
     end
 
     # Set the BIOS service
-    # @param [String, Symbol] name
-    # @param [String, Symbol] email
+    # @param name [String, Symbol]
+    # @param email [String, Symbol]
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_bios_service(name, email)
