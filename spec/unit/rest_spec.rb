@@ -157,7 +157,7 @@ RSpec.describe ILO_SDK::Client do
     end
 
     it 'fails when an invalid request type is given' do
-      expect { @client.send(:build_request, :fake, @uri, {}) }.to raise_error(/Invalid rest call/)
+      expect { @client.send(:build_request, :fake, @uri, {}) }.to raise_error(/Invalid rest method/)
     end
 
     context 'default header values' do

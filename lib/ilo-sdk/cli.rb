@@ -60,6 +60,10 @@ module ILO_SDK
       desc: 'Username. Can also use ENV[\'ILO_USER\']',
       aliases: '-u'
 
+    class_option :password,
+      desc: 'Password. Can also use ENV[\'ILO_PASSWORD\']',
+      aliases: '-p'
+
     class_option :log_level,
       desc: 'Log level to use',
       aliases: '-l',
@@ -118,12 +122,56 @@ module ILO_SDK
       client_setup
       @client.response_handler(@client.rest_get('/redfish/v1/Sessions/'))
       puts 'Login Successful!'
+    rescue StandardError => e
+      fail_nice(e.message)
+    end
+
+    method_option :format,
+      desc: 'Output format (for response)',
+      aliases: '-f',
+      enum: %w(json yaml raw),
+      default: 'json'
+    method_option :data,
+      desc: 'Data to pass in the request body (in JSON format)',
+      aliases: '-d'
+    rest_examples =  "\n  ilo-ruby rest get   redfish/v1/"
+    rest_examples << "\n  ilo-ruby rest patch redfish/v1/Systems/1/bios/Settings/"
+    rest_examples << " -d '{\"ServiceName\":\"iLO Admin\",\"ServiceEmail\":\"admin@domain.com\"}'"
+    rest_examples << "\n  ilo-ruby rest post  redfish/v1/Managers/1/LogServices/IEL/ -d '{\"Action\":\"ClearLog\"}'"
+    desc 'rest METHOD URI', "Make REST call to the iLO API. Examples:#{rest_examples}"
+    def rest(method, uri)
+      client_setup('log_level' => :error)
+      uri_copy = uri.dup
+      uri_copy.prepend('/') unless uri_copy.start_with?('/')
+      if @options['data']
+        begin
+          data = { body: JSON.parse(@options['data']) }
+        rescue JSON::ParserError => e
+          fail_nice("Failed to parse data as JSON\n#{e.message}")
+        end
+      end
+      data ||= {}
+      response = @client.rest_api(method, uri_copy, data)
+      if response.code.to_i.between?(200, 299)
+        case @options['format']
+        when 'yaml'
+          puts JSON.parse(response.body).to_yaml
+        when 'json'
+          puts JSON.pretty_generate(JSON.parse(response.body))
+        else # raw
+          puts response.body
+        end
+      else
+        fail_nice("Request failed: #{response.inspect}\nHeaders: #{response.to_hash}\nBody: #{response.body}")
+      end
+    rescue ILO_SDK::InvalidRequest => e
+      fail_nice(e.message)
     end
 
     private
 
     def fail_nice(msg = nil)
-      puts "ERROR: #{msg}" if msg
+      $stderr.puts "ERROR: #{msg}" if msg
       exit 1
     end
 
@@ -132,6 +180,7 @@ module ILO_SDK
       client_params['ssl_enabled'] = false if @options['ssl_verify'] == false
       client_params['host'] ||= @options['host'] if @options['host']
       client_params['user'] ||= @options['user'] if @options['user']
+      client_params['password'] ||= @options['password'] if @options['password']
       client_params['log_level'] ||= @options['log_level'].to_sym if @options['log_level']
       @client = ILO_SDK::Client.new(client_params)
     rescue StandardError => e

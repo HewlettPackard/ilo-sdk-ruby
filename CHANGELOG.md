@@ -1,5 +1,8 @@
 ### New (Unreleased)
 
+#### v1.2.1
+ - Added rest command to cli
+
 ### v1.2.0
  - Added custom exception classes
  - Added disable_proxy client option

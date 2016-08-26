@@ -11,5 +11,5 @@
 
 # Gem version defined here
 module ILO_SDK
-  VERSION = '1.2.0'.freeze
+  VERSION = '1.2.1'.freeze
 end
