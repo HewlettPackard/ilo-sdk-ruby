@@ -1,6 +1,7 @@
 # Ruby SDK for HPE iLO
 
 [![Gem Version](https://badge.fury.io/rb/ilo-sdk.svg)](https://badge.fury.io/rb/ilo-sdk)
+[![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/gems/ilo-sdk)
 
 Software Development Kit for interacting with the Hewlett Packard Enterprise iLO (Integrated Lights-Out) server management technology.
 
