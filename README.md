@@ -1,6 +1,7 @@
 # Ruby SDK for HPE iLO
 
 [![Gem Version](https://badge.fury.io/rb/ilo-sdk.svg)](https://badge.fury.io/rb/ilo-sdk)
+[![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://www.rubydoc.info/gems/ilo-sdk)
 
 Software Development Kit for interacting with the Hewlett Packard Enterprise iLO (Integrated Lights-Out) server management technology.
 
@@ -292,7 +293,7 @@ empty = client.logs_empty?(log_type)
 # Get a specific type of logs based on severity level and duration:
 severity_level = 'OK'
 duration = 10 # hours
-logs = client.get_log(severity_level, duration, log_type)
+logs = client.get_logs(severity_level, duration, log_type)
 ```
 
 #### Manager Account
