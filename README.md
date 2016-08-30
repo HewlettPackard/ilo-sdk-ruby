@@ -292,7 +292,7 @@ empty = client.logs_empty?(log_type)
 # Get a specific type of logs based on severity level and duration:
 severity_level = 'OK'
 duration = 10 # hours
-logs = client.get_log(severity_level, duration, log_type)
+logs = client.get_logs(severity_level, duration, log_type)
 ```
 
 #### Manager Account
