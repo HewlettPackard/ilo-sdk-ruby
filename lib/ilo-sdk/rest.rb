@@ -151,7 +151,7 @@ module ILO_SDK
       when 'delete', :delete
         request = Net::HTTP::Delete.new(uri.request_uri)
       else
-        raise InvalidRequest, "Invalid rest call: #{type}"
+        raise InvalidRequest, "Invalid rest method: #{type}. Valid methods are: get, post, put, patch, delete"
       end
       options['Content-Type'] ||= 'application/json'
       options.delete('Content-Type') if [:none, 'none', nil].include?(options['Content-Type'])

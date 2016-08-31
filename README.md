@@ -398,7 +398,7 @@ client.eject_virtual_media(id)
 
 ## Custom requests
 
-In most cases, interacting with the client object is enough, but sometimes you need to make your own custom requests to the iLO.
+This gem includes some usefull helper methods, but sometimes you need to make your own custom requests to the iLO.
 This project makes it extremely easy to do with some built-in methods for the client object. Here are some examples:
 
 ```ruby
@@ -409,10 +409,18 @@ response = client.rest_get('/rest/v1/Schemas')
 
 # Then we can validate the response and convert the response body into a hash...
 data = client.response_handler(response)
+
+# For updating iLO resources, use patch:
+options = { ServiceName: 'iLO Admin', ServiceEmail: 'admin@domain.com' }
+response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: options)
+
+# For creating new iLO resources, use post:
+options = { UserName: 'admin', Password: '123' }
+response = rest_post('/redfish/v1/AccountService/Accounts/', body: options)
 ```
 
-This example is about as basic as it gets, but you can make any type of iLO request.
-If a resource does not do what you need, this will allow you to do it.
+These example are about as basic as it gets, but you can make any type of iLO API request.
+If a helper does not do what you need, this will allow you to do it.
 Please refer to the documentation and [code](lib/ilo-sdk/rest.rb) for complete list of methods and information about how to use them.
 
 
