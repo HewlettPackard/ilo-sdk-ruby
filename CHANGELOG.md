@@ -1,4 +1,8 @@
 ### New (Unreleased)
+ - (none)
+
+#### v1.2.2
+ - Fixed log_entry helper methods
 
 #### v1.2.1
  - Added rest command to cli
