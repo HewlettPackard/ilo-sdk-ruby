@@ -398,7 +398,7 @@ client.eject_virtual_media(id)
 
 ## Custom requests
 
-This gem includes some usefull helper methods, but sometimes you need to make your own custom requests to the iLO.
+This gem includes some useful helper methods, but sometimes you need to make your own custom requests to the iLO.
 This project makes it extremely easy to do with some built-in methods for the client object. Here are some examples:
 
 ```ruby
@@ -412,11 +412,11 @@ data = client.response_handler(response)
 
 # For updating iLO resources, use patch:
 options = { ServiceName: 'iLO Admin', ServiceEmail: 'admin@domain.com' }
-response = rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: options)
+response = client.rest_patch('/redfish/v1/Systems/1/bios/Settings/', body: options)
 
 # For creating new iLO resources, use post:
 options = { UserName: 'admin', Password: '123' }
-response = rest_post('/redfish/v1/AccountService/Accounts/', body: options)
+response = client.rest_post('/redfish/v1/AccountService/Accounts/', body: options)
 ```
 
 These example are about as basic as it gets, but you can make any type of iLO API request.
@@ -426,7 +426,7 @@ Please refer to the documentation and [code](lib/ilo-sdk/rest.rb) for complete l
 
 ## CLI
 
-This gem also comes with a command-line interface to make interracting with the iLO API without needing to create a Ruby program.
+This gem also comes with a command-line interface to make interacting with the iLO API possible without needing to create a Ruby program.
 
 Note: In order to use this, you will need to make sure your ruby bin directory is in your path. Run $ gem environment to see where the executable paths are for your Ruby installation.
 
