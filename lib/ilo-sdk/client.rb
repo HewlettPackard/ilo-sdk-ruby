@@ -81,5 +81,6 @@ module ILO_SDK
     include ChassisHelper
     include ServiceRootHelper
     include HttpsCertHelper
+    include EthernetInterfaceHelper
   end
 end
