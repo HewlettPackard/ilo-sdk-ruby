@@ -10,7 +10,7 @@
 # specific language governing permissions and limitations under the License.
 
 module ILO_SDK
-  # Contains helper methods for EthernetInterface actions
+  # Contains helper methods for EthernetInterface IPv4 actions
   module EthernetInterfaceHelper
     # Get all the Ethernet Interface settings
     # @param manager_id [Integer, String] ID of the Manager
@@ -27,7 +27,21 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_ilo_dhcp(manager_id = 1, ethernet_interface = 1)
-      new_action = { 'Oem' => { 'Hp' => { 'DHCPv4' => { 'Enabled' => true } } } }
+      new_action = { 
+        'Oem' => { 
+          'Hp' => { 
+            'DHCPv4' => { 
+              'Enabled' => true,
+              'UseDNSServers' => true,
+              'UseDomainName' => true,
+              'UseGateway' => true,
+              'UseNTPServers' => true,
+              'UseStaticRoutes' => true,
+              'UseWINSServers' => true
+            } 
+          } 
+        } 
+      }
       response = rest_patch("/rest/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}", body: new_action)
       response_handler(response)
       true
