@@ -21,16 +21,16 @@ module ILO_SDK
       response_handler(rest_get("/rest/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}"))
     end
 
-    # Set EthernetInterface to obtain IPv4 address from DHCP
+    # Set EthernetInterface to obtain IPv4 settings from DHCP
     # @param manager_id [Integer, String] ID of the Manager
     # @ethernet_interface [Integer, String] ID of the EthernetInterface
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_ilo_dhcp(manager_id = 1, ethernet_interface = 1)
-      new_action = { 
-        'Oem' => { 
-          'Hp' => { 
-            'DHCPv4' => { 
+      new_action = {
+        'Oem' => {
+          'Hp' => {
+            'DHCPv4' => {
               'Enabled' => true,
               'UseDNSServers' => true,
               'UseDomainName' => true,
@@ -38,9 +38,9 @@ module ILO_SDK
               'UseNTPServers' => true,
               'UseStaticRoutes' => true,
               'UseWINSServers' => true
-            } 
-          } 
-        } 
+            }
+          }
+        }
       }
       response = rest_patch("/rest/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}", body: new_action)
       response_handler(response)
@@ -55,9 +55,9 @@ module ILO_SDK
     # @ethernet_interface [Integer, String] ID of the EthernetInterface
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_ilo_static(ip, netmask, gateway='0.0.0.0', manager_id = 1, ethernet_interface = 1)
-      new_action = { 
-        'Oem' => { 'Hp' => { 'DHCPv4' => { 'Enabled' => false } } }, 
+    def set_ilo_static(ip, netmask, gateway = '0.0.0.0', manager_id = 1, ethernet_interface = 1)
+      new_action = {
+        'Oem' => { 'Hp' => { 'DHCPv4' => { 'Enabled' => false } } },
         'IPv4Addresses' => [
           'Address' => ip, 'SubnetMask' => netmask, 'Gateway' => gateway
         ]
@@ -67,7 +67,7 @@ module ILO_SDK
       response_handler(response)
       true
     end
-    
+
     # Set EthernetInterface DNS servers
     # @paramm dns_servers [Array] list of DNS servers
     # @param manager_id [Integer, String] ID of the Manager
@@ -76,13 +76,29 @@ module ILO_SDK
     # @return true
     def set_ilo_dns_servers(dns_servers, manager_id = 1, ethernet_interface = 1)
       new_action = {
-        'Oem' => { 
-          'Hp' => { 
+        'Oem' => {
+          'Hp' => {
             'DHCPv4' => { 'UseDNSServers' => false },
             'IPv4' => { 'DNSServers' => dns_servers }
           }
         }
       }
+      response = rest_patch("/rest/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}", body: new_action)
+      response_handler(response)
+      true
+    end
+
+    # Set iLO hostname and domain name
+    # @param hostname [String] iLO hostname
+    # @param domain_name [String] iLO domain name
+    # @param manager_id [Integer, String] ID of the Manager
+    # @ethernet_interface [Integer, String] ID of the EthernetInterface
+    # @raise [RuntimeError] if the request failed
+    # @return true
+    def set_ilo_hostname(hostname, domain_name = nil, manager_id = 1, ethernet_interface = 1)
+      new_action = { 'Oem' => { 'Hp' => { 'HostName' => hostname, 'DHCPv4' => {} } } }
+      new_action['Oem']['Hp']['DHCPv4']['UseDomainName'] = false if domain_name
+      new_action['Oem']['Hp']['DomainName'] = domain_name if domain_name
       response = rest_patch("/rest/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}", body: new_action)
       response_handler(response)
       true
