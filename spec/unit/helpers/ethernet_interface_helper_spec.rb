@@ -17,13 +17,13 @@ RSpec.describe ILO_SDK::Client do
     it 'allows the system_id to be set' do
       fake_response = FakeResponse.new(@settings)
       expect(@client).to receive(:rest_get).with('/redfish/v1/Managers/2/EthernetInterfaces/1/').and_return(fake_response)
-      expect(@client.get_ilo_ethernet_interface(2)).to eq(@settings)
+      expect(@client.get_ilo_ethernet_interface(manager_id: 2)).to eq(@settings)
     end
 
     it 'allows system_id and ethernet_interface to be set' do
       fake_response = FakeResponse.new(@settings)
       expect(@client).to receive(:rest_get).with('/redfish/v1/Managers/2/EthernetInterfaces/2/').and_return(fake_response)
-      expect(@client.get_ilo_ethernet_interface(2, 2)).to eq(@settings)
+      expect(@client.get_ilo_ethernet_interface(manager_id: 2, ethernet_interface: 2)).to eq(@settings)
     end
 
   end
@@ -54,12 +54,12 @@ RSpec.describe ILO_SDK::Client do
 
     it 'allows the system_id to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/1/', body: @enable_dhcp_body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_dhcp(2)).to eq(true)
+      expect(@client.set_ilo_ipv4_dhcp(manager_id: 2)).to eq(true)
     end
 
     it 'allows system_id and ethernet_interface to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/2/', body: @enable_dhcp_body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_dhcp(2, 2)).to eq(true)
+      expect(@client.set_ilo_ipv4_dhcp(manager_id: 2, ethernet_interface: 2)).to eq(true)
     end
   end
 
@@ -73,24 +73,24 @@ RSpec.describe ILO_SDK::Client do
 
     it 'makes a PATCH rest call' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_static('192.168.1.1', '255.255.255.0')).to eq(true)
+      expect(@client.set_ilo_ipv4_static(ip: '192.168.1.1', netmask: '255.255.255.0')).to eq(true)
     end
 
     it 'allows the gateway to be set' do
       body = Marshal.load(Marshal.dump(@body))
       body['IPv4Addresses'][0]['Gateway'] = '192.168.1.254'
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_static('192.168.1.1', '255.255.255.0', '192.168.1.254')).to eq(true)
+      expect(@client.set_ilo_ipv4_static(ip: '192.168.1.1', netmask: '255.255.255.0', gateway: '192.168.1.254')).to eq(true)
     end
 
     it 'allows the system_id to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/1/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_static('192.168.1.1', '255.255.255.0', '0.0.0.0', 2)).to eq(true)
+      expect(@client.set_ilo_ipv4_static(ip: '192.168.1.1', netmask: '255.255.255.0', manager_id: 2)).to eq(true)
     end
 
     it 'allows system_id and ethernet_interface to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/2/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_static('192.168.1.1', '255.255.255.0', '0.0.0.0', 2, 2)).to eq(true)
+      expect(@client.set_ilo_ipv4_static(ip: '192.168.1.1', netmask: '255.255.255.0', manager_id: 2, ethernet_interface: 2)).to eq(true)
     end
   end
 
@@ -102,17 +102,17 @@ RSpec.describe ILO_SDK::Client do
 
     it 'makes a PATCH rest call' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_dns_servers(@dns_servers)).to eq(true)
+      expect(@client.set_ilo_ipv4_dns_servers(dns_servers: @dns_servers)).to eq(true)
     end
 
     it 'allows the system_id to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/1/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_dns_servers(@dns_servers, 2)).to eq(true)
+      expect(@client.set_ilo_ipv4_dns_servers(dns_servers: @dns_servers, manager_id: 2)).to eq(true)
     end
 
     it 'allows system_id and ethernet_interface to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/2/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_ipv4_dns_servers(@dns_servers, 2, 2)).to eq(true)
+      expect(@client.set_ilo_ipv4_dns_servers(dns_servers: @dns_servers, manager_id: 2, ethernet_interface: 2)).to eq(true)
     end
   end
 
@@ -123,7 +123,7 @@ RSpec.describe ILO_SDK::Client do
 
     it 'makes a PATCH rest call' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_hostname('server-ilo')).to eq(true)
+      expect(@client.set_ilo_hostname(hostname: 'server-ilo')).to eq(true)
     end
 
     it 'allows domain_name to be set' do
@@ -131,17 +131,17 @@ RSpec.describe ILO_SDK::Client do
       body['Oem']['Hp'].merge!('DHCPv4' => { 'UseDomainName' => false }, 'DHCPv6' => { 'UseDomainName' => false })
       body['Oem']['Hp']['DomainName'] = 'domain.local'
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_hostname('server-ilo', 'domain.local')).to eq(true)
+      expect(@client.set_ilo_hostname(hostname: 'server-ilo', domain_name: 'domain.local')).to eq(true)
     end
 
     it 'allows the system_id to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/1/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_hostname('server-ilo', nil, 2)).to eq(true)
+      expect(@client.set_ilo_hostname(hostname: 'server-ilo', manager_id: 2)).to eq(true)
     end
 
     it 'allows system_id and ethernet_interface to be set' do
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/2/EthernetInterfaces/2/', body: @body).and_return(FakeResponse.new)
-      expect(@client.set_ilo_hostname('server-ilo', nil, 2, 2)).to eq(true)
+      expect(@client.set_ilo_hostname(hostname: 'server-ilo', manager_id: 2, ethernet_interface: 2)).to eq(true)
     end
   end
 end

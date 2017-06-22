@@ -14,19 +14,19 @@ module ILO_SDK
   module EthernetInterfaceHelper
     # Get all the Ethernet Interface settings
     # @param manager_id [Integer, String] ID of the Manager
-    # @ethernet_interface [Integer, String] ID of the EthernetInterface
+    # @param ethernet_interface [Integer, String] ID of the EthernetInterface
     # @raise [RuntimeError] if the request failed
     # @return [Hash] EthernetInterface settings
-    def get_ilo_ethernet_interface(manager_id = 1, ethernet_interface = 1)
+    def get_ilo_ethernet_interface(manager_id: 1, ethernet_interface: 1)
       response_handler(rest_get("/redfish/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}/"))
     end
 
     # Set EthernetInterface to obtain IPv4 settings from DHCP
     # @param manager_id [Integer, String] ID of the Manager
-    # @ethernet_interface [Integer, String] ID of the EthernetInterface
+    # @param ethernet_interface [Integer, String] ID of the EthernetInterface
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_ilo_ipv4_dhcp(manager_id = 1, ethernet_interface = 1)
+    def set_ilo_ipv4_dhcp(manager_id: 1, ethernet_interface: 1)
       new_action = {
         'Oem' => {
           'Hp' => {
@@ -48,14 +48,14 @@ module ILO_SDK
     end
 
     # Set EthernetInterface to static IPv4 address
-    # @paramm ip [String] IPv4 address
+    # @param ip [String] IPv4 address
     # @param netmask [String] IPv4 subnet mask
     # @param gateway [String] IPv4 default gateway
     # @param manager_id [Integer, String] ID of the Manager
-    # @ethernet_interface [Integer, String] ID of the EthernetInterface
+    # @param ethernet_interface [Integer, String] ID of the EthernetInterface
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_ilo_ipv4_static(ip, netmask, gateway = '0.0.0.0', manager_id = 1, ethernet_interface = 1)
+    def set_ilo_ipv4_static(ip:, netmask:, gateway: '0.0.0.0', manager_id: 1, ethernet_interface: 1)
       new_action = {
         'Oem' => { 'Hp' => { 'DHCPv4' => { 'Enabled' => false } } },
         'IPv4Addresses' => [
@@ -68,12 +68,12 @@ module ILO_SDK
     end
 
     # Set EthernetInterface DNS servers
-    # @paramm dns_servers [Array] list of DNS servers
+    # @param dns_servers [Array] list of DNS servers
     # @param manager_id [Integer, String] ID of the Manager
-    # @ethernet_interface [Integer, String] ID of the EthernetInterface
+    # @param ethernet_interface [Integer, String] ID of the EthernetInterface
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_ilo_ipv4_dns_servers(dns_servers, manager_id = 1, ethernet_interface = 1)
+    def set_ilo_ipv4_dns_servers(dns_servers:, manager_id: 1, ethernet_interface: 1)
       new_action = {
         'Oem' => {
           'Hp' => {
@@ -91,10 +91,10 @@ module ILO_SDK
     # @param hostname [String] iLO hostname
     # @param domain_name [String] iLO domain name
     # @param manager_id [Integer, String] ID of the Manager
-    # @ethernet_interface [Integer, String] ID of the EthernetInterface
+    # @param ethernet_interface [Integer, String] ID of the EthernetInterface
     # @raise [RuntimeError] if the request failed
     # @return true
-    def set_ilo_hostname(hostname, domain_name = nil, manager_id = 1, ethernet_interface = 1)
+    def set_ilo_hostname(hostname:, domain_name: nil, manager_id: 1, ethernet_interface: 1)
       new_action = { 'Oem' => { 'Hp' => { 'HostName' => hostname } } }
       new_action['Oem']['Hp'].merge!('DHCPv4' => {}, 'DHCPv6' => {}) if domain_name
       new_action['Oem']['Hp']['DHCPv4']['UseDomainName'] = false if domain_name

@@ -249,13 +249,13 @@ client.get_ilo_ethernet_interface
 client.set_ilo_ipv4_dhcp
 
 # Set static IPv4 address, netmask and gateway
-client.set_ilo_ipv4_static('192.168.1.1', '255.255.255.0', '192.168.1.254')
+client.set_ilo_ipv4_static(ip: '192.168.1.1', netmask: '255.255.255.0', gateway: '192.168.1.254')
 
 # Set IPv4 DNS servers
-client.set_ilo_ipv4_dns_servers(['2.2.2.2', '4.4.4.4', '8.8.8.8'])
+client.set_ilo_ipv4_dns_servers(dns_servers: ['2.2.2.2', '4.4.4.4', '8.8.8.8'])
 
-# Set hostname and domain name
-client.set_ilo_hostname('server-ilo', 'domain.local') # => server-ilo.domain.local
+# Set hostname and domain name 'server-ilo.domain.local'
+client.set_ilo_hostname(hostname: 'server-ilo', domain_name: 'domain.local')
 ```
 
 #### Firmware

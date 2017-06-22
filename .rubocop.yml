@@ -1,4 +1,6 @@
 # See default at https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+AllCops:
+  TargetRubyVersion: 2.1
 
 Metrics/ClassLength:
   Max: 200
