@@ -239,6 +239,25 @@ ntp_servers = ['10.1.1.1', '10.1.1.2']
 client.set_ntp_server(ntp_servers)
 ```
 
+#### Manager EthernetInterface settings
+
+```ruby
+# Get EthernetInteface settings
+client.get_ilo_ethernet_interface
+
+# Set EthernetInterface to obtain all IPv4 parameters from DHCP server
+client.set_ilo_ipv4_dhcp
+
+# Set static IPv4 address, netmask and gateway
+client.set_ilo_ipv4_static('192.168.1.1', '255.255.255.0', '192.168.1.254')
+
+# Set IPv4 DNS servers
+client.set_ilo_ipv4_dns_servers(['2.2.2.2', '4.4.4.4', '8.8.8.8'])
+
+# Set hostname and domain name
+client.set_ilo_hostname('server-ilo', 'domain.local') # => server-ilo.domain.local
+```
+
 #### Firmware
 
 ```ruby
