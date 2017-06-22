@@ -62,7 +62,6 @@ module ILO_SDK
           'Address' => ip, 'SubnetMask' => netmask, 'Gateway' => gateway
         ]
       }
-      puts new_action
       response = rest_patch("/redfish/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}/", body: new_action)
       response_handler(response)
       true
