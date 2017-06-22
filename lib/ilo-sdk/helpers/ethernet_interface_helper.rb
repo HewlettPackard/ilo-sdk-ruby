@@ -95,8 +95,10 @@ module ILO_SDK
     # @raise [RuntimeError] if the request failed
     # @return true
     def set_ilo_hostname(hostname, domain_name = nil, manager_id = 1, ethernet_interface = 1)
-      new_action = { 'Oem' => { 'Hp' => { 'HostName' => hostname, 'DHCPv4' => {} } } }
+      new_action = { 'Oem' => { 'Hp' => { 'HostName' => hostname } } }
+      new_action['Oem']['Hp'].merge!('DHCPv4' => {}, 'DHCPv6' => {}) if domain_name
       new_action['Oem']['Hp']['DHCPv4']['UseDomainName'] = false if domain_name
+      new_action['Oem']['Hp']['DHCPv6']['UseDomainName'] = false if domain_name
       new_action['Oem']['Hp']['DomainName'] = domain_name if domain_name
       response = rest_patch("/redfish/v1/Managers/#{manager_id}/EthernetInterfaces/#{ethernet_interface}/", body: new_action)
       response_handler(response)

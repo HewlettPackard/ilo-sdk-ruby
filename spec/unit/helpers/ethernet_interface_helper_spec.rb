@@ -118,7 +118,7 @@ RSpec.describe ILO_SDK::Client do
 
   describe '#set_ilo_hostname' do
     before(:all) do
-      @body = { 'Oem' => { 'Hp' => { 'HostName' => 'server-ilo', 'DHCPv4' => {} } } }
+      @body = { 'Oem' => { 'Hp' => { 'HostName' => 'server-ilo' } } }
     end
 
     it 'makes a PATCH rest call' do
@@ -128,7 +128,7 @@ RSpec.describe ILO_SDK::Client do
 
     it 'allows domain_name to be set' do
       body = Marshal.load(Marshal.dump(@body))
-      body['Oem']['Hp']['DHCPv4']['UseDomainName'] = false
+      body['Oem']['Hp'].merge!('DHCPv4' => { 'UseDomainName' => false }, 'DHCPv6' => { 'UseDomainName' => false })
       body['Oem']['Hp']['DomainName'] = 'domain.local'
       expect(@client).to receive(:rest_patch).with('/redfish/v1/Managers/1/EthernetInterfaces/1/', body: body).and_return(FakeResponse.new)
       expect(@client.set_ilo_hostname('server-ilo', 'domain.local')).to eq(true)
